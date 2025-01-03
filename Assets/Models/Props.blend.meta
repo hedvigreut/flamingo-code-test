@@ -3,7 +3,52 @@ guid: 25ef72845dca74d518bbf7f754a1ab2e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadBrown
+    second: {fileID: 2100000, guid: 54fcd520f0f924a99aa4a8210afd6a53, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadBrown.001
+    second: {fileID: 2100000, guid: a3a0f3f1d328b437d91d81cceb2df83a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadBrown.002
+    second: {fileID: 2100000, guid: da9dba917d5e64387846dff1b28aecdd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadBrown.003
+    second: {fileID: 2100000, guid: f88fc4d724bee42c3b85fe8e73367b0e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadYellow
+    second: {fileID: 2100000, guid: a89a9c0dcdf5646cb9bdd23b718dfac8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadYellow.001
+    second: {fileID: 2100000, guid: 34629fc44989f46aa8c19afdd009416e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadYellow.002
+    second: {fileID: 2100000, guid: 03032833422eb46bfbb0a368cdc6c9e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blend_RoadYellow.003
+    second: {fileID: 2100000, guid: 63200073c9873463594a0f5132959a4f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface1
+    second: {fileID: 2100000, guid: f917e40dd43874128b61b66c3116f89c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
