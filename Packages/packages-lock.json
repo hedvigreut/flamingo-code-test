@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.svermeulen.extenject": {
+      "version": "file:/Users/hedvigreutersward/Downloads/Zenject-master/UnityProject/Assets/Plugins/Zenject",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.12",
       "depth": 1,
