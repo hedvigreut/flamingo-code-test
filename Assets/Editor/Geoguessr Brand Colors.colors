@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: Geoguessr Brand Colors
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: Purple 10
+    m_Color: {r: 0.8509804, g: 0.84313726, b: 0.9411765, a: 1}
+  - m_Name: Purple 20
+    m_Color: {r: 0.6313726, g: 0.60784316, b: 0.8509804, a: 1}
+  - m_Name: Purple 50
+    m_Color: {r: 0.4745098, g: 0.3137255, b: 0.8980392, a: 1}
+  - m_Name: Purple 80
+    m_Color: {r: 0.3372549, g: 0.23137255, b: 0.6039216, a: 1}
+  - m_Name: Purple 100
+    m_Color: {r: 0.3372549, g: 0.23137255, b: 0.6039216, a: 1}
+  - m_Name: Black
+    m_Color: {r: 0.0627451, g: 0.0627451, b: 0.10980392, a: 1}
+  - m_Name: Yellow 50
+    m_Color: {r: 0.99607843, g: 0.8039216, b: 0.09803922, a: 1}
+  - m_Name: Orange 50
+    m_Color: {r: 1, g: 0.6431373, b: 0.23921569, a: 1}
+  - m_Name: Orange 80
+    m_Color: {r: 0.7490196, g: 0.48235294, b: 0.18039216, a: 1}
+  - m_Name: Green 50
+    m_Color: {r: 0.5921569, g: 0.9098039, b: 0.31764707, a: 1}
+  - m_Name: Green 80
+    m_Color: {r: 0.42352942, g: 0.7254902, b: 0.15686275, a: 1}
+  - m_Name: Turqouise 50
+    m_Color: {r: 0.22745098, g: 0.9098039, b: 0.7411765, a: 1}
+  - m_Name: Turqouise 80
+    m_Color: {r: 0.12156863, g: 0.6117647, b: 0.49019608, a: 1}
+  - m_Name: Blue 50
+    m_Color: {r: 0, g: 0.63529414, b: 0.99607843, a: 1}
+  - m_Name: Red 50
+    m_Color: {r: 0.9137255, g: 0.27058825, b: 0.3764706, a: 1}
+  - m_Name: GG Red
+    m_Color: {r: 0.8, g: 0.1882353, b: 0.18039216, a: 1}
