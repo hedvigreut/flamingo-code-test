@@ -260,8 +260,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 299.8}
-  m_SizeDelta: {x: 360.8956, y: -45.37439}
+  m_AnchoredPosition: {x: -0.00008010864, y: 296}
+  m_SizeDelta: {x: 348.7663, y: -49.4175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9059141992516684564
 CanvasRenderer:
@@ -293,8 +293,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Correct answer:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2da46bb3b886f4938a7f08d4e03b0cfb, type: 2}
-  m_sharedMaterial: {fileID: 8852687650049356894, guid: 2da46bb3b886f4938a7f08d4e03b0cfb,
+  m_fontAsset: {fileID: 11400000, guid: 6ac0b7923eccb4dce82169519d16cb52, type: 2}
+  m_sharedMaterial: {fileID: -5314933712149396544, guid: 6ac0b7923eccb4dce82169519d16cb52,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.6
+  m_fontSize: 50.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 6852528888855352438}
   - component: {fileID: 5376898131883056217}
   m_Layer: 5
-  m_Name: AvatarTextWrong
+  m_Name: AvatarTextCorrect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -426,10 +426,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You'll get it right next time!
+  m_text: Well done!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2da46bb3b886f4938a7f08d4e03b0cfb, type: 2}
-  m_sharedMaterial: {fileID: 8852687650049356894, guid: 2da46bb3b886f4938a7f08d4e03b0cfb,
+  m_fontAsset: {fileID: 11400000, guid: 462cb2c3d099046f59684a7e626f3799, type: 2}
+  m_sharedMaterial: {fileID: -771156661259166631, guid: 462cb2c3d099046f59684a7e626f3799,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -825,8 +825,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: United States
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2da46bb3b886f4938a7f08d4e03b0cfb, type: 2}
-  m_sharedMaterial: {fileID: 8852687650049356894, guid: 2da46bb3b886f4938a7f08d4e03b0cfb,
+  m_fontAsset: {fileID: 11400000, guid: 462cb2c3d099046f59684a7e626f3799, type: 2}
+  m_sharedMaterial: {fileID: -771156661259166631, guid: 462cb2c3d099046f59684a7e626f3799,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 68.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -969,8 +969,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -290}
-  m_SizeDelta: {x: 360.8956, y: -45.37439}
+  m_AnchoredPosition: {x: -0.000061035156, y: -285}
+  m_SizeDelta: {x: 415.4775, y: -31.2234}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &360255228240934125
 CanvasRenderer:
@@ -1002,16 +1002,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tap to continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2da46bb3b886f4938a7f08d4e03b0cfb, type: 2}
-  m_sharedMaterial: {fileID: 8852687650049356894, guid: 2da46bb3b886f4938a7f08d4e03b0cfb,
+  m_fontAsset: {fileID: 11400000, guid: 462cb2c3d099046f59684a7e626f3799, type: 2}
+  m_sharedMaterial: {fileID: -771156661259166631, guid: 462cb2c3d099046f59684a7e626f3799,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289481562
-  m_fontColor: {r: 0.3529412, g: 0.29411766, b: 0.6745098, a: 1}
+    rgba: 4293973977
+  m_fontColor: {r: 0.8509804, g: 0.84313726, b: 0.9411765, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64.85
+  m_fontSize: 67.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.56078434}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
