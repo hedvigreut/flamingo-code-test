@@ -47,7 +47,15 @@ MonoBehaviour:
     m_Color: {r: 0.8, g: 0.1882353, b: 0.18039216, a: 1}
   - m_Name: GO Blue
     m_Color: {r: 0.25882354, g: 0.41176474, b: 0.6627451, a: 1}
+  - m_Name: Go Turquoise
+    m_Color: {r: 0.5330188, g: 0.914686, b: 1, a: 1}
+  - m_Name: Go Blue Light
+    m_Color: {r: 0.8726415, g: 0.99020314, b: 1, a: 1}
   - m_Name: GO Beige
     m_Color: {r: 1, g: 0.9607844, b: 0.85098046, a: 1}
   - m_Name: GO Brown
     m_Color: {r: 0.40000004, g: 0.2392157, b: 0.12941177, a: 1}
+  - m_Name: GO Purple
+    m_Color: {r: 0.76470596, g: 0.74509805, b: 0.9960785, a: 1}
+  - m_Name: GO Purple Medium
+    m_Color: {r: 0.67612267, g: 0.6494749, b: 0.990566, a: 1}
