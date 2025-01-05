@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public struct FlagData
+public struct QuizVisualsData
 {
     public Sprite sprite;
     public string ImageID;

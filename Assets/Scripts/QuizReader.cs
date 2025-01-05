@@ -12,8 +12,21 @@ public class QuizReader : MonoBehaviour
     {
         try
         {
-            // Deserialize JSON into a QuestionDataArray containing the questions array
-            return JsonUtility.FromJson<QuestionDataArray>(textData.text).questions;
+            // Try to parse as an array of questions
+            var parsedData = JsonUtility.FromJson<QuestionDataArray>(textData.text);
+            if (parsedData != null && parsedData.questions != null)
+            {
+                return parsedData.questions;
+            }
+
+            // If parsing as an array fails, try parsing as a single question
+            var singleQuestion = JsonUtility.FromJson<QuestionData>(textData.text);
+            if (singleQuestion != null)
+            {
+                return new[] { singleQuestion }; // Return as a single-element array
+            }
+
+            throw new Exception("Invalid JSON format");
         }
         catch (Exception e)
         {
@@ -24,7 +37,7 @@ public class QuizReader : MonoBehaviour
 }
 
 /// <summary>
-/// Helper wrapper as with more questions, the JSON has an array
+/// Helper wrapper for multiple questions
 /// </summary>
 [Serializable]
 public class QuestionDataArray

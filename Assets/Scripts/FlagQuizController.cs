@@ -49,7 +49,7 @@ public class FlagQuizController : MonoBehaviour
     [SerializeField] 
     private TextAsset _quizData;
     [SerializeField] 
-    private FlagData[] _flagSpritesToIds;
+    private QuizVisualsData[] _flagSpritesToIds;
     [SerializeField] 
     private QuizReader _quizReader;
     private QuestionData[] _questions;
@@ -61,6 +61,9 @@ public class FlagQuizController : MonoBehaviour
     private const string correctAnswerMessage = "Well Done!";
     private const string animatorOpenState = "Open";
     private const string animatorCloseState = "Close";
+    
+    private const string SceneName = "FlagQuiz";
+
     
     private void Awake()
     {
@@ -203,7 +206,7 @@ public class FlagQuizController : MonoBehaviour
     
     private void UnloadScene()
     {
-        SceneManager.UnloadSceneAsync("FlagQuiz");
+        SceneManager.UnloadSceneAsync(SceneName);
     }
 
     private void SetTravelPoints(bool isCorrect)

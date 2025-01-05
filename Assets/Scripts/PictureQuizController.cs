@@ -1,22 +1,39 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PictureQuizController : QuizController
 {
     [SerializeField]
     private Button[] optionButtons;
-
-    [Header("Button settings:")]
-    [SerializeField] 
-    private FlagData[] _flagSpritesToIds;
+    [SerializeField]
+    private Image quizImage;
     
-    private void Awake()
+    private const string SceneName = "PictureQuiz";
+
+    protected override void SetQuestionVisuals()
     {
-        _timeLeft = _totalTime;
-        _currentTimeText.text = _timeLeft.ToString();
-        _questions = quizReader.ParseQuizData(_quizData);
+        base.SetQuestionVisuals();
+        for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
+        {
+            string imageID = _currentQuestion.CustomImageID;
+            Sprite quizPicture = GetSpriteByID(imageID);
+            if (quizPicture != null)
+            {
+                quizImage.sprite = quizPicture;
+            }
+            else
+            {
+                Debug.LogWarning($"No sprite found for ImageID: {imageID}");
+            }
+        }
+    }
+    
+    protected override void SetQuestionData()
+    {
+        base.SetQuestionData();
         _currentQuestionIndex = PlayerManager.Instance.GetPictureQuestionIndex();
-        if (_currentQuestionIndex >= _questions.Length)
+        if (_currentQuestionIndex >= _questions.Length || _questions.Length == 0)
         {
             _currentQuestionIndex = 0;
             PlayerManager.Instance.ResetCurrentPictureQuestionIndex();
@@ -31,5 +48,10 @@ public class PictureQuizController : QuizController
         {
             Debug.LogWarning("Failed to parse flag data.");
         }
+    }
+    
+    protected override void UnloadScene()
+    {
+        SceneManager.UnloadSceneAsync(SceneName);
     }
 }

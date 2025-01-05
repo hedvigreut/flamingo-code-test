@@ -82,7 +82,6 @@ public class BoardController : MonoBehaviour
 
     private async void StartPictureQuiz()
     {
-        Debug.Log("Loading PIctures");
         var loadOperation = SceneManager.LoadSceneAsync(PictureQuizSceneName, LoadSceneMode.Additive);
         while (!loadOperation.isDone)
         {
