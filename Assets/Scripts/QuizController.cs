@@ -71,6 +71,11 @@ public abstract class QuizController : MonoBehaviour
         _currentTimeText.text = _timeLeft.ToString();
         SetQuestionData();
     }
+    
+    private void Start()
+    {
+        _countingDown = true;
+    }
 
     protected virtual void SetQuestionData()
     {
@@ -100,8 +105,8 @@ public abstract class QuizController : MonoBehaviour
     {
         questionText.text = _currentQuestion.Question;
     }
-    
-    private void SetAnswerVisuals(bool isCorrect)
+
+    protected void SetAnswerVisuals(bool isCorrect)
     {
         correctAnswerText.text = GetCountryNameByID(_currentAnswer.ImageID);
         correctAnswerImage.sprite = GetSpriteByID(_currentAnswer.ImageID);
@@ -157,14 +162,25 @@ public abstract class QuizController : MonoBehaviour
         PlayerManager.Instance.AddTravelPoints(isCorrect ? _correctReward : _incorrectReward);
     }
     
-    protected Sprite GetSpriteByID(string imageID)
+    protected Sprite GetSpriteByID(string imageID, bool customID = false)
     {
-        return _quizVisuals.FirstOrDefault(visualsData => visualsData.ImageID == imageID).sprite;
+        foreach (var visualsData in _quizVisuals)
+        {
+            string compareID = customID ? visualsData.sprite.name : visualsData.ImageID;
+            if (compareID == imageID)
+                return visualsData.sprite;
+        }
+        return null;
     }
-
     protected string GetCountryNameByID(string imageID)
     {
-        return _quizVisuals.FirstOrDefault(visualsData => visualsData.ImageID == imageID).name;
+        foreach (var visualsData in _quizVisuals)
+        {
+            if (visualsData.ImageID == imageID)
+            {
+                return visualsData.name;
+            }
+        }
+        return null;
     }
-
 }

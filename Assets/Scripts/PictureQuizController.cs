@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,24 +11,6 @@ public class PictureQuizController : QuizController
     private Image quizImage;
     
     private const string SceneName = "PictureQuiz";
-
-    protected override void SetQuestionVisuals()
-    {
-        base.SetQuestionVisuals();
-        for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
-        {
-            string imageID = _currentQuestion.CustomImageID;
-            Sprite quizPicture = GetSpriteByID(imageID);
-            if (quizPicture != null)
-            {
-                quizImage.sprite = quizPicture;
-            }
-            else
-            {
-                Debug.LogWarning($"No sprite found for ImageID: {imageID}");
-            }
-        }
-    }
     
     protected override void SetQuestionData()
     {
@@ -48,6 +31,49 @@ public class PictureQuizController : QuizController
         {
             Debug.LogWarning("Failed to parse flag data.");
         }
+    }
+    
+    protected override void SetQuestionVisuals()
+    {
+        base.SetQuestionVisuals();
+        for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
+        {
+            string imageID = _currentQuestion.CustomImageID;
+            Sprite quizPicture = GetSpriteByID(imageID,  true);
+            if (quizPicture != null)
+            {
+                quizImage.sprite = quizPicture;
+            }
+            else
+            {
+                Debug.LogWarning($"No sprite found for ImageID: {imageID}");
+            }
+        }
+    }
+    
+    /// <summary>
+    /// When the button is clicked check if the button index corresponds to the
+    /// correct answer
+    /// </summary>
+    /// <param name="index">Button Index</param>
+    public void OnOptionButtonPressed(int index)
+    {
+        Button button = optionButtons[index];
+        bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
+        // flagButton.ChangeColor(isCorrect);
+        SetTravelPoints(isCorrect: isCorrect);
+        _currentQuestionIndex++;
+        PlayerManager.Instance.SetCurrentFlagQuestionIndex(_currentQuestionIndex);
+        StartCoroutine(WaitForButtonAnimation(button, isCorrect));
+    }
+    
+    private IEnumerator WaitForButtonAnimation(Button button, bool correct)
+    {
+        raycaster.enabled = false;
+        //yield return new WaitUntil(() => button.IsAnimatorAnimationComplete());
+        yield return new WaitForSeconds(0.5f);
+        raycaster.enabled = true;
+        SetAnswerVisuals(correct);
     }
     
     protected override void UnloadScene()
