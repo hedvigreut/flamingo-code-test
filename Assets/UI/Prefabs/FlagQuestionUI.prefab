@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 1537960665433477924}
   - component: {fileID: 8077300935302718552}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,10 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e3f88fa8aeb40f7a6b6e24bf154f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
-  startY: -1000
-  fadeInCanvasGroup: {fileID: 6546338882322257431}
-  flagArea: {fileID: 3811540005153021855}
+  _duration: 1
+  _fadeInCanvasGroup: {fileID: 6546338882322257431}
+  _flagArea: {fileID: 3811540005153021855}
 --- !u!225 &6546338882322257431
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -20,6 +20,9 @@ public class FlagQuizController : MonoBehaviour
     private GameObject _answerIncorrectUI;
     [SerializeField] 
     private TextMeshProUGUI _answerIncorrectReward;
+    [SerializeField] 
+    private GraphicRaycaster _raycaster;
+
 
     [SerializeField] 
     private int _correctReward = 5000;    
@@ -85,18 +88,14 @@ public class FlagQuizController : MonoBehaviour
             flagButton.ChangeColor(false);
             SetTravelPoints(_incorrectReward);
         }
-        StartCoroutine(WaitToExit(1, isCorrect));
+        
+        StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
     }
 
-    /// <summary>
-    /// Wait to show the correct or incorrect flag before transitioning UI
-    /// </summary>
-    /// <param name="ammount">Amount of time to wait</param>
-    /// <param name="correct">Was the answer correct?</param>
-    /// <returns></returns>
-    private IEnumerator WaitToExit(int amount, bool correct)
+    private IEnumerator WaitForButtonAnimation(FlagButton flagButton, bool correct)
     {
-        yield return new WaitForSeconds(amount);
+        _raycaster.enabled = false;
+        yield return new WaitUntil(() => flagButton.IsAnimatorAnimationComplete());
         SetAnswerVisuals(correct);
     }
 

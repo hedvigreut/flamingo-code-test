@@ -519,6 +519,7 @@ MonoBehaviour:
   _answerCorrectReward: {fileID: 1042499839}
   _answerIncorrectUI: {fileID: 1420664011}
   _answerIncorrectReward: {fileID: 1236961265}
+  _raycaster: {fileID: 2099251577}
   _correctReward: 5000
   _incorrectReward: 2000
   _totalTime: 15
@@ -1125,11 +1126,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110455706547875709, guid: 093ca73ffe0e845e9b27e005f4b9ecfc,
-        type: 3}
-      propertyPath: m_Name
-      value: Timer
       objectReference: {fileID: 0}
     - target: {fileID: 1264939326291856508, guid: 093ca73ffe0e845e9b27e005f4b9ecfc,
         type: 3}
