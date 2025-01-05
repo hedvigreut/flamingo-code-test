@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class GeoguessrButtonPressAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ButtonPressAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Button _button;
     private Color _originalColor;
@@ -15,7 +15,7 @@ public class GeoguessrButtonPressAnimation : MonoBehaviour, IPointerDownHandler,
         _button = GetComponent<Button>();
         if (_button.image == null)
         {
-            Debug.LogError("GeoguessrButtonPressAnimation requires a Button with an Image component.");
+            Debug.LogError("ButtonPressAnimation requires a Button with an Image component.");
             return;
         }
         _originalColor = _button.image.color;

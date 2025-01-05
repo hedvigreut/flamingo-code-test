@@ -1,18 +1,16 @@
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization;
 
-public class GeoGuessrObjectWobbleAnimation : MonoBehaviour
+public class WobbleAnimation : MonoBehaviour
 {
-    [FormerlySerializedAs("minScale")]
     [Header("Squish Settings")]
     [SerializeField]
     private float _minScale = 0.99f;
-    [FormerlySerializedAs("maxScale")] [SerializeField]
+    [SerializeField]
     private float _maxScale = 1.01f;
-    [FormerlySerializedAs("duration")] [SerializeField]
+    [SerializeField]
     private float _duration = 0.5f; 
-    [FormerlySerializedAs("playOnStart")] [SerializeField]
+    [SerializeField]
     private bool _playOnStart;
 
     private Vector3 originalScale;
