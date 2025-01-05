@@ -127,6 +127,7 @@ public class FlagQuizController : MonoBehaviour
         _raycaster.enabled = false;
         yield return new WaitUntil(() => flagButton.IsAnimatorAnimationComplete());
         yield return new WaitForSeconds(0.5f);
+        _raycaster.enabled = true;
         SetAnswerVisuals(correct);
     }
 

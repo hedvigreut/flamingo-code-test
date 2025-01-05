@@ -5,6 +5,7 @@ public class PlayerManager : MonoBehaviour
     private static PlayerManager _instance;
     private const string TravelPoints = "Travel Points";
     private const string CurrentFlagQuestionIndex = "FlagQuestionIndex";
+    private const string CurrentPictureQuestionIndex = "PictureQuestionIndex";
     
     public static PlayerManager Instance
     {
@@ -64,6 +65,23 @@ public class PlayerManager : MonoBehaviour
     public void ResetCurrentFlagQuestionIndex()
     {
         PlayerPrefs.SetInt(CurrentFlagQuestionIndex, 0);
+        PlayerPrefs.Save();
+    }
+    
+    public int GetPictureQuestionIndex()
+    {
+        return PlayerPrefs.GetInt(CurrentPictureQuestionIndex, 0);
+    }
+
+    public void SetCurrentPictureQuestionIndex(int questionIndex)
+    {
+        PlayerPrefs.SetInt(CurrentPictureQuestionIndex, questionIndex);
+        PlayerPrefs.Save();
+    }
+
+    public void ResetCurrentPictureQuestionIndex()
+    {
+        PlayerPrefs.SetInt(CurrentPictureQuestionIndex, 0);
         PlayerPrefs.Save();
     }
 }
