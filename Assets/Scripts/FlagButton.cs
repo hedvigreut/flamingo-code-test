@@ -15,9 +15,9 @@ public class FlagButton : MonoBehaviour
     private Animator _animator;
     public FlagAnimationState _lastAnimationState;
 
-    public void ChangeColor(bool correct)
+    public void ChangeColor(bool isCorrect)
     {
-        outline.color = correct ? correctColor : incorrectColor;
+        outline.color = isCorrect ? correctColor : incorrectColor;
     }
 
     public void SetFlagImage(Sprite flag)

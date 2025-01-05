@@ -10,19 +10,16 @@ public class FlagQuizController : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField]
     private TextMeshProUGUI _flagQuestionText;
-    [SerializeField]
-    private FlagButton[] _flagButtons;
     [SerializeField] 
-    private GameObject _answerCorrectUI;
+    private GameObject _rewardUI;
     [SerializeField] 
-    private TextMeshProUGUI _answerCorrectReward;
+    private TextMeshProUGUI _answerMessage;
     [SerializeField] 
-    private GameObject _answerIncorrectUI;
-    [SerializeField] 
-    private TextMeshProUGUI _answerIncorrectReward;
+    private TextMeshProUGUI _rewardValue;
     [SerializeField] 
     private GraphicRaycaster _raycaster;
-
+    [SerializeField]
+    private FlagButton[] _flagButtons;
 
     [SerializeField] 
     private int _correctReward = 5000;    
@@ -47,6 +44,9 @@ public class FlagQuizController : MonoBehaviour
     [SerializeField] 
     private QuizReader _quizReader;
     private QuestionData _currentQuestion;
+
+    private const string incorrectAnswerMessage = "You'll get it right next time!";
+    private const string correctAnswerMessage = "Well Done!";
     
     private void Awake()
     {
@@ -67,38 +67,6 @@ public class FlagQuizController : MonoBehaviour
     {
         _countingDown = true;
     }
-
-    /// <summary>
-    /// When the button is clicked check if the button index corresponds to the
-    /// correct answer
-    /// </summary>
-    /// <param name="index">Button Index</param>
-    public void OnFlagButtonPressed(int index)
-    {
-        FlagButton flagButton = _flagButtons[index];
-        bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
-        
-        if (isCorrect)
-        {
-            flagButton.ChangeColor(true);
-            SetTravelPoints(_correctReward);
-        }
-        else
-        {
-            flagButton.ChangeColor(false);
-            SetTravelPoints(_incorrectReward);
-        }
-        
-        StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
-    }
-
-    private IEnumerator WaitForButtonAnimation(FlagButton flagButton, bool correct)
-    {
-        _raycaster.enabled = false;
-        yield return new WaitUntil(() => flagButton.IsAnimatorAnimationComplete());
-        SetAnswerVisuals(correct);
-    }
-
     
     private void Update()                                                    
     {                                                                        
@@ -110,12 +78,33 @@ public class FlagQuizController : MonoBehaviour
         }
         else            
         {
-            SetTravelPoints(_incorrectReward);
-            SetAnswerVisuals(false);        
+            SetAnswerVisuals(isCorrect:false);    
+            SetTravelPoints(isCorrect: false);
             _countingDown = false;                    
         }                                             
     }                                                                        
-    
+
+    /// <summary>
+    /// When the button is clicked check if the button index corresponds to the
+    /// correct answer
+    /// </summary>
+    /// <param name="index">Button Index</param>
+    public void OnFlagButtonPressed(int index)
+    {
+        FlagButton flagButton = _flagButtons[index];
+        bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
+        flagButton.ChangeColor(isCorrect);
+        SetTravelPoints(isCorrect: isCorrect);
+        StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
+    }
+
+    private IEnumerator WaitForButtonAnimation(FlagButton flagButton, bool correct)
+    {
+        _raycaster.enabled = false;
+        yield return new WaitUntil(() => flagButton.IsAnimatorAnimationComplete());
+        SetAnswerVisuals(correct);
+    }
+
     /// <summary>
     /// Sets the flag images on the buttons from the ids
     /// </summary>
@@ -139,28 +128,20 @@ public class FlagQuizController : MonoBehaviour
 
     private void SetAnswerVisuals(bool isCorrect)
     {
-        if (isCorrect)
-        {
-            _answerCorrectUI.SetActive(true);
-            _answerCorrectReward.text = _correctReward.ToString();
-            AnimateRewardText(_answerCorrectReward);
-        }
-        else
-        {
-            _answerIncorrectUI.SetActive(true);
-            _answerIncorrectReward.text = _incorrectReward.ToString();
-            AnimateRewardText(_answerIncorrectReward);
-        }
+        _answerMessage.text = isCorrect ? correctAnswerMessage : incorrectAnswerMessage;
+        _rewardValue.text = isCorrect ? _correctReward.ToString() : _incorrectReward.ToString();
+        _rewardUI.SetActive(true);
+        AnimateRewardText();
     }
     
-    private void AnimateRewardText(TextMeshProUGUI rewardText)
+    private void AnimateRewardText()
     {
-        float targetValue = float.Parse(rewardText.text);
-        rewardText.text = "0";
+        float targetValue = float.Parse(_rewardValue.text);
+        _rewardValue.text = "0";
         DOTween.Sequence()
-            .Append(DOTween.To(() => 0f, x => rewardText.text = Mathf.FloorToInt(x).ToString(), targetValue, 1f))
-            .Join(rewardText.transform.DOScale(Vector3.one * 1.2f, 1f))
-            .Append(rewardText.transform.DOScale(Vector3.one, 0.3f))
+            .Append(DOTween.To(() => 0f, x => _rewardValue.text = Mathf.FloorToInt(x).ToString(), targetValue, 1f))
+            .Join(_rewardValue.transform.DOScale(Vector3.one * 1.2f, 1f))
+            .Append(_rewardValue.transform.DOScale(Vector3.one, 0.3f))
             .OnComplete(() => {
                 WaitForTapToUnload();
             });
@@ -187,9 +168,9 @@ public class FlagQuizController : MonoBehaviour
     }
 
 
-    private void SetTravelPoints(int points)
+    private void SetTravelPoints(bool isCorrect)
     {
-        PlayerManager.Instance.AddTravelPoints(points);
+        PlayerManager.Instance.AddTravelPoints(isCorrect ? _correctReward : _incorrectReward);
     }
     
     private Sprite GetSpriteByID(string imageID)
