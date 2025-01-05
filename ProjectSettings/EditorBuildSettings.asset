@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FlagQuiz.unity
     guid: c4b2bfb7b7caf4afcbe4ffaa35211729
+  - enabled: 1
+    path: Assets/Scenes/TextQuiz.unity
+    guid: 094e1221bb38b4689a5b61facb567d26
   m_configObjects: {}
