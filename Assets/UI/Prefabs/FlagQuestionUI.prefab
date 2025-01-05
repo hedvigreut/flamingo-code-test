@@ -230,6 +230,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8491421337378568911}
+  - component: {fileID: 9140930621075640997}
+  - component: {fileID: 6546338882322257431}
   m_Layer: 5
   m_Name: FlagQuestionUI
   m_TagString: Untagged
@@ -262,6 +264,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9140930621075640997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2485152316490032222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e3f88fa8aeb40f7a6b6e24bf154f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 2
+  startY: -1000
+  fadeInCanvasGroup: {fileID: 6546338882322257431}
+  flagArea: {fileID: 3811540005153021855}
+--- !u!225 &6546338882322257431
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2485152316490032222}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2851385537210195222
 GameObject:
   m_ObjectHideFlags: 0
