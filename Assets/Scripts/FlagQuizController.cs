@@ -13,6 +13,10 @@ public class FlagQuizController : MonoBehaviour
     [SerializeField] 
     private GameObject _rewardUI;
     [SerializeField] 
+    private Image _correctAnswerFlag;
+    [SerializeField] 
+    private TextMeshProUGUI _correctAnswerText;
+    [SerializeField] 
     private TextMeshProUGUI _answerMessage;
     [SerializeField] 
     private TextMeshProUGUI _rewardValue;
@@ -44,6 +48,7 @@ public class FlagQuizController : MonoBehaviour
     [SerializeField] 
     private QuizReader _quizReader;
     private QuestionData _currentQuestion;
+    private Answer _currentAnswer;
 
     private const string incorrectAnswerMessage = "You'll get it right next time!";
     private const string correctAnswerMessage = "Well Done!";
@@ -53,6 +58,7 @@ public class FlagQuizController : MonoBehaviour
         _timeLeft = _totalTime;
         _currentTimeText.text = _timeLeft.ToString();
         _currentQuestion = _quizReader.ParseQuizData(_quizData);
+        _currentAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
         if (_currentQuestion != null)
         {
             SetQuestionVisuals();
@@ -102,6 +108,7 @@ public class FlagQuizController : MonoBehaviour
     {
         _raycaster.enabled = false;
         yield return new WaitUntil(() => flagButton.IsAnimatorAnimationComplete());
+        yield return new WaitForSeconds(0.5f);
         SetAnswerVisuals(correct);
     }
 
@@ -128,6 +135,12 @@ public class FlagQuizController : MonoBehaviour
 
     private void SetAnswerVisuals(bool isCorrect)
     {
+        _correctAnswerText.text = GetCountryNameByID(_currentAnswer.ImageID);
+        Debug.Log(_correctAnswerFlag.ToString());
+        Debug.Log(GetSpriteByID(_currentAnswer.ImageID).ToString());
+        _correctAnswerFlag.sprite = GetSpriteByID(_currentAnswer.ImageID);
+        Debug.Log(_correctAnswerFlag.ToString());
+
         _answerMessage.text = isCorrect ? correctAnswerMessage : incorrectAnswerMessage;
         _rewardValue.text = isCorrect ? _correctReward.ToString() : _incorrectReward.ToString();
         _rewardUI.SetActive(true);
@@ -180,6 +193,18 @@ public class FlagQuizController : MonoBehaviour
             if (flagSpriteToID.ImageID == imageID)
             {
                 return flagSpriteToID.sprite;
+            }
+        }
+        return null;
+    }
+    
+    private string GetCountryNameByID(string imageID)
+    {
+        foreach (var flagSpriteToID in _flagSpritesToIds)
+        {
+            if (flagSpriteToID.ImageID == imageID)
+            {
+                return flagSpriteToID.name;
             }
         }
         return null;

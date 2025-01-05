@@ -7,6 +7,7 @@ public struct FlagSpriteToID
 {
     public Sprite sprite;
     public string ImageID;
+    public string name;
 }
 
 [Serializable]

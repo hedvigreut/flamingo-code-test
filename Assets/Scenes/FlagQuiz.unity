@@ -469,6 +469,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flagQuestionText: {fileID: 5284184137343310132}
   _rewardUI: {fileID: 8311385088257166443}
+  _correctAnswerFlag: {fileID: 9163141026939843746}
+  _correctAnswerText: {fileID: 9163141026939843745}
   _answerMessage: {fileID: 802408450993035934}
   _rewardValue: {fileID: 2668870554788163388}
   _raycaster: {fileID: 2099251577}
@@ -486,12 +488,16 @@ MonoBehaviour:
   _flagSpritesToIds:
   - sprite: {fileID: 21300000, guid: aa7afeb4cdb604109a8aa4c8e19c5207, type: 3}
     ImageID: ca
+    name: Canada
   - sprite: {fileID: 21300000, guid: f01b1383a489f473380152fa57a2626b, type: 3}
     ImageID: ie
+    name: Ireland
   - sprite: {fileID: 21300000, guid: c840c90675e444fed9551f13fec3d49f, type: 3}
     ImageID: nz
+    name: New Zealand
   - sprite: {fileID: 21300000, guid: f75ef7a79354a4bca9e8b6f856f82a8d, type: 3}
     ImageID: us
+    name: United States
   _quizReader: {fileID: 103924046}
 --- !u!114 &1349431012 stripped
 MonoBehaviour:
@@ -1608,6 +1614,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b58bfb233ec644ab8ae6ccc752a61f5, type: 3}
+--- !u!114 &9163141026939843745 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4811722209815321164, guid: 5b58bfb233ec644ab8ae6ccc752a61f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 9163141026939843744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9163141026939843746 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6199801667935707581, guid: 5b58bfb233ec644ab8ae6ccc752a61f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 9163141026939843744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
