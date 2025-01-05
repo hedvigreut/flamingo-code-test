@@ -3,7 +3,6 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BoardController : MonoBehaviour
@@ -29,12 +28,15 @@ public class BoardController : MonoBehaviour
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
     
-
     private void OnDisable()
     {
         SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
+    /// <summary>
+    /// If another quiz scene unloads, let's update travel points if changed
+    /// </summary>
+    /// <param name="scene"></param>
     private void OnSceneUnloaded(Scene scene)
     {
         int currentTravelPoints = PlayerManager.Instance.GetTravelPoints();
@@ -45,6 +47,7 @@ public class BoardController : MonoBehaviour
             _previousTravelPoints = currentTravelPoints;
         }
     }
+    
     private void AnimateTravelPointsChange(int fromValue, int toValue)
     {
         DOTween.To(() => (float)fromValue, 
@@ -53,14 +56,12 @@ public class BoardController : MonoBehaviour
             .SetEase(Ease.Linear);
     }
 
+    /// <summary>
+    /// Debug button to start Flag quiz
+    /// </summary>
     public void OnFlagQuizPressed()
     {
         StartFlagQuiz();
-    }
-    
-    public void OnTextQuizPressed()
-    {
-        StartTextQuiz();
     }
     
     private async void StartFlagQuiz()
@@ -70,6 +71,14 @@ public class BoardController : MonoBehaviour
         {
             await Task.Yield();
         }
+    }
+    
+    /// <summary>
+    /// Debug button to start Text quiz
+    /// </summary>
+    public void OnTextQuizPressed()
+    {
+        StartTextQuiz();
     }
 
     private async void StartTextQuiz()
