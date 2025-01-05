@@ -219,7 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minScale: 0.98
   _maxScale: 1.02
-  _duration: 1
+  _duration: 0.5
   _playOnStart: 1
 --- !u!1 &2485152316490032222
 GameObject:

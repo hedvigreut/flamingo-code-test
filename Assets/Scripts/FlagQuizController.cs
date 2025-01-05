@@ -5,37 +5,44 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum AnswerState{
-    Correct,
-    Incorrect,
-}
 public class FlagQuizController : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField]
     private TextMeshProUGUI _flagQuestionText;
-    [SerializeField, 
-     Tooltip("Assign the flag images in the buttons to be populated")]
-    private Image[] flags;
-    [SerializeField] private GameObject _answerCorrectUI;
-    [SerializeField] private TextMeshProUGUI _answerCorrectReward;
-    [SerializeField] private GameObject _answerIncorrectUI;
-    [SerializeField] private TextMeshProUGUI _answerIncorrectReward;
+    [SerializeField]
+    private FlagButton[] _flagButtons;
+    [SerializeField] 
+    private GameObject _answerCorrectUI;
+    [SerializeField] 
+    private TextMeshProUGUI _answerCorrectReward;
+    [SerializeField] 
+    private GameObject _answerIncorrectUI;
+    [SerializeField] 
+    private TextMeshProUGUI _answerIncorrectReward;
 
-    [SerializeField] private int _correctReward = 5000;    
-    [SerializeField] private int _incorrectReward = 2000; 
+    [SerializeField] 
+    private int _correctReward = 5000;    
+    [SerializeField] 
+    private int _incorrectReward = 2000; 
     
     [Header("Timer:")]
-    [SerializeField] private float _totalTime = 15f;
-    [SerializeField] private TMP_Text _currentTimeText;
-    [SerializeField] private Slider _progressSlider;
+    [SerializeField] 
+    private float _totalTime = 15f;
+    [SerializeField] 
+    private TMP_Text _currentTimeText;
+    [SerializeField] 
+    private Slider _progressSlider;
     private float _timeLeft;
     private bool _countingDown;
 
     [Header("Data Reading")]
-    [SerializeField] private TextAsset _quizData;
-    [SerializeField] private FlagSpriteToID[] _flagSpritesToIds;
-    [SerializeField] private QuizReader _quizReader;
+    [SerializeField] 
+    private TextAsset _quizData;
+    [SerializeField] 
+    private FlagSpriteToID[] _flagSpritesToIds;
+    [SerializeField] 
+    private QuizReader _quizReader;
     private QuestionData _currentQuestion;
     
     private void Awake()
@@ -65,19 +72,34 @@ public class FlagQuizController : MonoBehaviour
     /// <param name="index">Button Index</param>
     public void OnFlagButtonPressed(int index)
     {
-        if (index == _currentQuestion.CorrectAnswerIndex)
+        FlagButton flagButton = _flagButtons[index];
+        bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
+        
+        if (isCorrect)
         {
-            Debug.Log("CORRECT ANSWER");
+            flagButton.ChangeColor(true);
             SetTravelPoints(_correctReward);
-            SetAnswerVisuals(AnswerState.Correct);
         }
         else
         {
-            Debug.Log("NOT CORRECT ANSWER");
+            flagButton.ChangeColor(false);
             SetTravelPoints(_incorrectReward);
-            SetAnswerVisuals(AnswerState.Incorrect);
         }
+        StartCoroutine(WaitToExit(1, isCorrect));
     }
+
+    /// <summary>
+    /// Wait to show the correct or incorrect flag before transitioning UI
+    /// </summary>
+    /// <param name="ammount">Amount of time to wait</param>
+    /// <param name="correct">Was the answer correct?</param>
+    /// <returns></returns>
+    private IEnumerator WaitToExit(int amount, bool correct)
+    {
+        yield return new WaitForSeconds(amount);
+        SetAnswerVisuals(correct);
+    }
+
     
     private void Update()                                                    
     {                                                                        
@@ -90,21 +112,24 @@ public class FlagQuizController : MonoBehaviour
         else            
         {
             SetTravelPoints(_incorrectReward);
-            SetAnswerVisuals(AnswerState.Incorrect);        
+            SetAnswerVisuals(false);        
             _countingDown = false;                    
         }                                             
     }                                                                        
     
+    /// <summary>
+    /// Sets the flag images on the buttons from the ids
+    /// </summary>
     private void SetQuestionVisuals()
     {
         _flagQuestionText.text = _currentQuestion.Question;
-        for (int i = 0; i < _currentQuestion.Answers.Count && i < flags.Length; i++)
+        for (int i = 0; i < _currentQuestion.Answers.Count && i < _flagButtons.Length; i++)
         {
             string imageID = _currentQuestion.Answers[i].ImageID;
             Sprite flagSprite = GetSpriteByID(imageID);
             if (flagSprite != null)
             {
-                flags[i].sprite = flagSprite;
+                _flagButtons[i].SetFlagImage(flagSprite);
             }
             else
             {
@@ -113,40 +138,32 @@ public class FlagQuizController : MonoBehaviour
         }
     }
 
-    private void SetAnswerVisuals(AnswerState state)
+    private void SetAnswerVisuals(bool isCorrect)
     {
-        switch (state)
+        if (isCorrect)
         {
-            case AnswerState.Correct:
-                _answerCorrectUI.SetActive(true);
-                _answerCorrectReward.text = _correctReward.ToString();
-                AnimateRewardText(_answerCorrectReward);
-                break;
-            case AnswerState.Incorrect:
-                _answerIncorrectUI.SetActive(true);
-                _answerIncorrectReward.text = _incorrectReward.ToString();
-                AnimateRewardText(_answerIncorrectReward);
-                break;
+            _answerCorrectUI.SetActive(true);
+            _answerCorrectReward.text = _correctReward.ToString();
+            AnimateRewardText(_answerCorrectReward);
+        }
+        else
+        {
+            _answerIncorrectUI.SetActive(true);
+            _answerIncorrectReward.text = _incorrectReward.ToString();
+            AnimateRewardText(_answerIncorrectReward);
         }
     }
     
     private void AnimateRewardText(TextMeshProUGUI rewardText)
     {
-        // Set initial value to 0
-        float targetValue = float.Parse(rewardText.text);  // Get the target value (correct or incorrect reward)
-        rewardText.text = "0";  // Start from 0
-
-        // Animate the number from 0 to the target value
+        float targetValue = float.Parse(rewardText.text);
+        rewardText.text = "0";
         DOTween.Sequence()
-            // First part: Animate the number count-up
-            .Append(DOTween.To(() => 0f, x => rewardText.text = Mathf.FloorToInt(x).ToString(), targetValue, 1f)) // Duration of 1 second
-            // Second part: Animate the scaling (upsizing)
-            .Join(rewardText.transform.DOScale(Vector3.one * 1.2f, 1f))  // Scale up to 1.2 times
-            // After both animations, scale back down
+            .Append(DOTween.To(() => 0f, x => rewardText.text = Mathf.FloorToInt(x).ToString(), targetValue, 1f))
+            .Join(rewardText.transform.DOScale(Vector3.one * 1.2f, 1f))
             .Append(rewardText.transform.DOScale(Vector3.one, 0.3f))
-            // OnComplete to handle actions after animation finishes
             .OnComplete(() => {
-                WaitForTapToUnload(); // Wait for tap to unload the scene
+                WaitForTapToUnload();
             });
     }
     
@@ -157,20 +174,17 @@ public class FlagQuizController : MonoBehaviour
 
     private IEnumerator CheckForTap()
     {
-        // Wait for any tap (on mobile or mouse click)
-        while (!Input.GetMouseButtonDown(0)) // This works for both mouse and touch input
+        while (!Input.GetMouseButtonDown(0))
         {
-            yield return null;  // Wait until the next frame
+            yield return null;
         }
 
-        UnloadScene();  // Call the function to unload the scene
+        UnloadScene();
     }
 
     private void UnloadScene()
     {
-        // Here, you can unload the scene, for example:
         SceneManager.UnloadSceneAsync("FlagQuiz");
-        Debug.Log("Scene unloaded!");
     }
 
 
