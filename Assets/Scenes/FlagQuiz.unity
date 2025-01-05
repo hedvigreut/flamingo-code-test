@@ -465,7 +465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc3979e9578944d18971a9e44140256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flagQuizData: {fileID: 4900000, guid: 66588a69ef43e4ed288f156ecfd7e532, type: 3}
 --- !u!1 &1268212492
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6542602aa2aa04c508b7f4e86b102b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _travelButton: {fileID: 0}
+  _travelPointsText: {fileID: 0}
 --- !u!4 &1268212494
 Transform:
   m_ObjectHideFlags: 0

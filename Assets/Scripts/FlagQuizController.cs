@@ -1,5 +1,8 @@
+using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum AnswerState{
@@ -65,11 +68,13 @@ public class FlagQuizController : MonoBehaviour
         if (index == _currentQuestion.CorrectAnswerIndex)
         {
             Debug.Log("CORRECT ANSWER");
+            SetTravelPoints(_correctReward);
             SetAnswerVisuals(AnswerState.Correct);
         }
         else
         {
             Debug.Log("NOT CORRECT ANSWER");
+            SetTravelPoints(_incorrectReward);
             SetAnswerVisuals(AnswerState.Incorrect);
         }
     }
@@ -83,7 +88,8 @@ public class FlagQuizController : MonoBehaviour
             _progressSlider.value = _timeLeft / _totalTime;                  
         }
         else            
-        {                                             
+        {
+            SetTravelPoints(_incorrectReward);
             SetAnswerVisuals(AnswerState.Incorrect);        
             _countingDown = false;                    
         }                                             
@@ -114,12 +120,63 @@ public class FlagQuizController : MonoBehaviour
             case AnswerState.Correct:
                 _answerCorrectUI.SetActive(true);
                 _answerCorrectReward.text = _correctReward.ToString();
+                AnimateRewardText(_answerCorrectReward);
                 break;
             case AnswerState.Incorrect:
                 _answerIncorrectUI.SetActive(true);
                 _answerIncorrectReward.text = _incorrectReward.ToString();
+                AnimateRewardText(_answerIncorrectReward);
                 break;
         }
+    }
+    
+    private void AnimateRewardText(TextMeshProUGUI rewardText)
+    {
+        // Set initial value to 0
+        float targetValue = float.Parse(rewardText.text);  // Get the target value (correct or incorrect reward)
+        rewardText.text = "0";  // Start from 0
+
+        // Animate the number from 0 to the target value
+        DOTween.Sequence()
+            // First part: Animate the number count-up
+            .Append(DOTween.To(() => 0f, x => rewardText.text = Mathf.FloorToInt(x).ToString(), targetValue, 1f)) // Duration of 1 second
+            // Second part: Animate the scaling (upsizing)
+            .Join(rewardText.transform.DOScale(Vector3.one * 1.2f, 1f))  // Scale up to 1.2 times
+            // After both animations, scale back down
+            .Append(rewardText.transform.DOScale(Vector3.one, 0.3f))
+            // OnComplete to handle actions after animation finishes
+            .OnComplete(() => {
+                WaitForTapToUnload(); // Wait for tap to unload the scene
+            });
+    }
+    
+    private void WaitForTapToUnload()
+    {
+        StartCoroutine(CheckForTap());
+    }
+
+    private IEnumerator CheckForTap()
+    {
+        // Wait for any tap (on mobile or mouse click)
+        while (!Input.GetMouseButtonDown(0)) // This works for both mouse and touch input
+        {
+            yield return null;  // Wait until the next frame
+        }
+
+        UnloadScene();  // Call the function to unload the scene
+    }
+
+    private void UnloadScene()
+    {
+        // Here, you can unload the scene, for example:
+        SceneManager.UnloadSceneAsync("FlagQuiz");
+        Debug.Log("Scene unloaded!");
+    }
+
+
+    private void SetTravelPoints(int points)
+    {
+        PlayerManager.Instance.AddTravelPoints(points);
     }
     
     private Sprite GetSpriteByID(string imageID)
