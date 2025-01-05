@@ -25,10 +25,15 @@ public class FlagQuizController : MonoBehaviour
     [SerializeField]
     private FlagButton[] _flagButtons;
 
+    [Header("Reward settings:")]
     [SerializeField] 
     private int _correctReward = 5000;    
     [SerializeField] 
     private int _incorrectReward = 2000; 
+    
+    [Header("Animation:")]
+    [SerializeField]
+    private Animator _rewardsAnimator;
     
     [Header("Timer:")]
     [SerializeField] 
@@ -52,6 +57,8 @@ public class FlagQuizController : MonoBehaviour
 
     private const string incorrectAnswerMessage = "You'll get it right next time!";
     private const string correctAnswerMessage = "Well Done!";
+    private const string animatorOpenState = "Open";
+    private const string animatorCloseState = "Close";
     
     private void Awake()
     {
@@ -171,15 +178,25 @@ public class FlagQuizController : MonoBehaviour
         {
             yield return null;
         }
+        _rewardsAnimator.SetBool(animatorOpenState, false);
 
+        while (!IsAnimatorDone(_rewardsAnimator, animatorCloseState))
+        {
+            yield return null;
+        }
         UnloadScene();
     }
-
+    
+    private bool IsAnimatorDone(Animator animator, string stateName)
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        return stateInfo.IsName(stateName) && stateInfo.normalizedTime >= 1f;
+    }
+    
     private void UnloadScene()
     {
         SceneManager.UnloadSceneAsync("FlagQuiz");
     }
-
 
     private void SetTravelPoints(bool isCorrect)
     {

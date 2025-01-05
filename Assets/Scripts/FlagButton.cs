@@ -13,7 +13,7 @@ public class FlagButton : MonoBehaviour
     private Color incorrectColor;
     [SerializeField] 
     private Animator _animator;
-    public FlagAnimationState _lastAnimationState;
+    private const string FinalAnimationState = "Pressed";
 
     public void ChangeColor(bool isCorrect)
     {
@@ -28,15 +28,7 @@ public class FlagButton : MonoBehaviour
     public bool IsAnimatorAnimationComplete()
     {
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        
-        // Check if we're in the "Pressed" animation state and if its normalized time has completed
-        return stateInfo.IsName(_lastAnimationState.ToString()) && stateInfo.normalizedTime >= 1f;
+        return stateInfo.IsName(FinalAnimationState) && stateInfo.normalizedTime >= 1f;
     }
     
-    public enum FlagAnimationState
-    {
-        None,
-        Normal,
-        Pressed
-    }
 }

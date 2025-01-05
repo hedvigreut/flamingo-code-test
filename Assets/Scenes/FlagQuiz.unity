@@ -481,6 +481,7 @@ MonoBehaviour:
   - {fileID: 691595674}
   _correctReward: 5000
   _incorrectReward: 2000
+  _rewardsAnimator: {fileID: 9163141026939843747}
   _totalTime: 15
   _currentTimeText: {fileID: 3669193159697998880}
   _progressSlider: {fileID: 1861207425}
@@ -1638,6 +1639,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &9163141026939843747 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6937948743360329678, guid: 5b58bfb233ec644ab8ae6ccc752a61f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 9163141026939843744}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
