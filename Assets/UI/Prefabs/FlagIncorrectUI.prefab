@@ -564,6 +564,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8237283241407210629}
+  - component: {fileID: 7672680979290881463}
+  - component: {fileID: 7307902918451627432}
   m_Layer: 5
   m_Name: FlagIncorrectUI
   m_TagString: Untagged
@@ -595,6 +597,46 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7672680979290881463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237130886354113868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e3f88fa8aeb40f7a6b6e24bf154f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeInCanvasGroup: {fileID: 7307902918451627432}
+  _objectsToAnimate:
+  - target: {fileID: 1012976239294045085}
+    type: 0
+  - target: {fileID: 5259521848039335839}
+    type: 0
+  - target: {fileID: 7971972106718060726}
+    type: 3
+  _headerArea: {fileID: 1012976239294045085}
+  _questionArea: {fileID: 5259521848039335839}
+  _flagArea: {fileID: 7971972106718060726}
+  _duration: 1
+  _squishMultiplier: 0.5
+  _headerFromTop: 1
+  _questionFromTop: 0
+  _flagFromTop: 0
+--- !u!225 &7307902918451627432
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237130886354113868}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4674571385551163937
 GameObject:
   m_ObjectHideFlags: 0

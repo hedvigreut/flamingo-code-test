@@ -1,78 +1,101 @@
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization;
 
 public class QuizTransitionAnimation : MonoBehaviour
 {
-    [SerializeField] 
-    [Tooltip("Attach the parent you want to fade in")]
-    private CanvasGroup _fadeInCanvasGroup;
 
-    [SerializeField] 
-    private GameObject _headerArea;
-    [SerializeField] 
-    private GameObject _questionArea;
-    [SerializeField] 
-    private GameObject _flagArea;
+    [SerializeField]
+    [Tooltip("Attach the objects you want to animate and choose a type of animation")]
+    private List<ObjectToAnimation> _objectsToAnimate;
     
     [Header("Animation Settings")]
     [SerializeField]
     private float _duration = 1f;
     [SerializeField] 
     private float _squishMultiplier = 0.5f;
-    
+
+    // Directional flags
+    [SerializeField] private bool _headerFromTop = true;
+    [SerializeField] private bool _questionFromTop = false;
+    [SerializeField] private bool _flagFromTop = false;
+
     private void Start()
     {
-        if (_fadeInCanvasGroup == null || _headerArea == null || _questionArea == null || _flagArea == null)
+        foreach (var objectToAnimate in _objectsToAnimate)
         {
-            Debug.LogError("TransitionAnimation is missing object references");
-            return;
+            if (objectToAnimate.target != null)
+            {
+                ApplyAnimation(objectToAnimate);
+            }
         }
-        AnimateFadeIn(_fadeInCanvasGroup);
-        AnimateFromDirection(_flagArea, false);
-        AnimateFromDirection(_headerArea, true);
-        SquishAndStretch(_questionArea, true, false);
     }
-
-    /// <summary>
-    /// Takes a CanvasGroup and animates from fully invisible to opaque
-    /// </summary>
-    /// <param name="targetGroup"></param>
-    private void AnimateFadeIn(CanvasGroup targetGroup)
+    
+    private void ApplyAnimation(ObjectToAnimation objectToAnimate)
     {
-        targetGroup.alpha = 0f;
-        targetGroup.DOFade(1f, _duration).SetEase(Ease.OutCubic);
-    }
-
-    /// <summary>
-    /// Animate a GameObject's position and transparency from the specified direction (top or bottom) to its target position.
-    /// </summary>
-    /// <param name="target">The GameObject to animate.</param>
-    /// <param name="fromTop">If true, the animation will start from the top; if false, it will start from the bottom.</param>
-    private void AnimateFromDirection(GameObject target, bool fromTop)
-    {
-        Vector3 targetPosition = target.transform.position;
-        float screenHeight = Screen.height;
-        float startY = fromTop ? screenHeight : -screenHeight;
-        Vector3 startPosition = new Vector3(targetPosition.x, startY, targetPosition.z);
-        target.transform.position = startPosition;
-        target.transform.DOMoveY(targetPosition.y, _duration).SetEase(Ease.OutBack);
+        switch (objectToAnimate.type)
+        {
+            case AnimationType.Squish:
+                SquishAndStretch(objectToAnimate.target);
+                break;
+            case AnimationType.FlyFromTop:
+                FlyFromDirection(objectToAnimate.target, fromTop: true);
+                break;
+            case AnimationType.FlyFromBottom:
+                FlyFromDirection(objectToAnimate.target, fromTop: false);
+                break;
+            case AnimationType.FadeIn:
+                FadeIn(objectToAnimate.target);
+                break;
+            default:
+                Debug.LogWarning($"Unsupported animation type: {objectToAnimate.type}");
+                break;
+        }
     }
     
     /// <summary>
     /// Squishes a GameObject in a specified direction (horizontal or vertical) and then stretches it back to its original size.
     /// </summary>
-    /// <param name="target">The GameObject to animate.</param>
-    /// <param name="direction">The direction of the squish. True for horizontal, false for vertical.</param>
-    private void SquishAndStretch(GameObject target, bool width, bool height)
+    private void SquishAndStretch(GameObject target)
     {
         Vector3 originalScale = target.transform.localScale;
         Vector3 squishedScale = new Vector3(
-            width ? _squishMultiplier * originalScale.x : originalScale.x,
-            height ? _squishMultiplier * originalScale.y : originalScale.y,
+            _squishMultiplier * originalScale.x,
+            originalScale.y,
             originalScale.z
         );
+
         target.transform.localScale = squishedScale;
-        target.transform.DOScale(originalScale, _duration).SetEase(Ease.OutQuad);
+        target.transform.DOScale(originalScale, _duration).SetEase(Ease.OutElastic);
+    }
+
+    /// <summary>
+    /// Animate a GameObject's position and transparency from the specified direction (top or bottom) to its target position.
+    /// </summary>
+    private void FlyFromDirection(GameObject target, bool fromTop)
+    {
+        Vector3 originalPosition = target.transform.position;
+        float screenHeight = Screen.height;
+        float startY = fromTop ? screenHeight : -screenHeight;
+
+        Vector3 startPosition = new Vector3(originalPosition.x, startY, originalPosition.z);
+        target.transform.position = startPosition;
+
+        target.transform.DOMoveY(originalPosition.y, _duration).SetEase(Ease.OutBack);
+    }
+
+    /// <summary>
+    /// Takes a CanvasGroup and animates from fully invisible to opaque
+    /// </summary>
+    private void FadeIn(GameObject target)
+    {
+        CanvasGroup canvasGroup = target.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = target.AddComponent<CanvasGroup>();
+        }
+
+        canvasGroup.alpha = 0f;
+        canvasGroup.DOFade(1f, _duration).SetEase(Ease.InQuad);
     }
 }

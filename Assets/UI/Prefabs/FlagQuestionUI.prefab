@@ -276,11 +276,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e3f88fa8aeb40f7a6b6e24bf154f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 1
   _fadeInCanvasGroup: {fileID: 6546338882322257431}
+  _objectsToAnimate:
+  - target: {fileID: 9018152197562697123}
+    type: 1
+  - target: {fileID: 4730557056783189600}
+    type: 0
+  - target: {fileID: 3811540005153021855}
+    type: 2
   _headerArea: {fileID: 9018152197562697123}
   _questionArea: {fileID: 4730557056783189600}
   _flagArea: {fileID: 3811540005153021855}
+  _duration: 1
+  _squishMultiplier: 0.5
+  _headerFromTop: 1
+  _questionFromTop: 0
+  _flagFromTop: 0
 --- !u!225 &6546338882322257431
 CanvasGroup:
   m_ObjectHideFlags: 0

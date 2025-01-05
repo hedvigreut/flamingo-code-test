@@ -979,11 +979,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlagCorrectUI
       objectReference: {fileID: 0}
-    - target: {fileID: 2433239867803388581, guid: a156a42ad924f45c5b29abf5c5033cc2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6697981567361202393, guid: a156a42ad924f45c5b29abf5c5033cc2,
         type: 3}
       propertyPath: m_Pivot.x
