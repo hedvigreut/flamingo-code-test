@@ -1,9 +1,8 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 
 [Serializable]
-public struct FlagSpriteToID
+public struct FlagData
 {
     public Sprite sprite;
     public string ImageID;
@@ -24,6 +23,6 @@ public class QuestionData
     public int QuestionType;
     public string Question;
     public string CustomImageID;
-    public List<Answer> Answers;
+    public Answer[] Answers;
     public int CorrectAnswerIndex;
 }

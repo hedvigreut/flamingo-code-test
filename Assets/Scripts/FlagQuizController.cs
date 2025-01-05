@@ -49,9 +49,11 @@ public class FlagQuizController : MonoBehaviour
     [SerializeField] 
     private TextAsset _quizData;
     [SerializeField] 
-    private FlagSpriteToID[] _flagSpritesToIds;
+    private FlagData[] _flagSpritesToIds;
     [SerializeField] 
     private QuizReader _quizReader;
+    private QuestionData[] _questions;
+    private int currentQuestionIndex = 0;
     private QuestionData _currentQuestion;
     private Answer _currentAnswer;
 
@@ -64,7 +66,14 @@ public class FlagQuizController : MonoBehaviour
     {
         _timeLeft = _totalTime;
         _currentTimeText.text = _timeLeft.ToString();
-        _currentQuestion = _quizReader.ParseQuizData(_quizData);
+        _questions = _quizReader.ParseQuizData(_quizData);
+        currentQuestionIndex = PlayerManager.Instance.GetFlagQuestionIndex();
+        if (currentQuestionIndex >= _questions.Length)
+        {
+            currentQuestionIndex = 0;
+            PlayerManager.Instance.ResetCurrentFlagQuestionIndex();
+        }
+        _currentQuestion = _questions[currentQuestionIndex];
         _currentAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
         if (_currentQuestion != null)
         {
@@ -108,6 +117,8 @@ public class FlagQuizController : MonoBehaviour
         bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
         flagButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
+        currentQuestionIndex++;
+        PlayerManager.Instance.SetCurrentFlagQuestionIndex(currentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
     }
 
@@ -125,7 +136,7 @@ public class FlagQuizController : MonoBehaviour
     private void SetQuestionVisuals()
     {
         _flagQuestionText.text = _currentQuestion.Question;
-        for (int i = 0; i < _currentQuestion.Answers.Count && i < _flagButtons.Length; i++)
+        for (int i = 0; i < _currentQuestion.Answers.Length && i < _flagButtons.Length; i++)
         {
             string imageID = _currentQuestion.Answers[i].ImageID;
             Sprite flagSprite = GetSpriteByID(imageID);
@@ -143,11 +154,7 @@ public class FlagQuizController : MonoBehaviour
     private void SetAnswerVisuals(bool isCorrect)
     {
         _correctAnswerText.text = GetCountryNameByID(_currentAnswer.ImageID);
-        Debug.Log(_correctAnswerFlag.ToString());
-        Debug.Log(GetSpriteByID(_currentAnswer.ImageID).ToString());
         _correctAnswerFlag.sprite = GetSpriteByID(_currentAnswer.ImageID);
-        Debug.Log(_correctAnswerFlag.ToString());
-
         _answerMessage.text = isCorrect ? correctAnswerMessage : incorrectAnswerMessage;
         _rewardValue.text = isCorrect ? _correctReward.ToString() : _incorrectReward.ToString();
         _rewardUI.SetActive(true);
