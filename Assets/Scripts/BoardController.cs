@@ -15,7 +15,7 @@ public class BoardController : MonoBehaviour
     
     private int _previousTravelPoints;
     private const string FlagQuizSceneName = "FlagQuiz";
-    private const string TextQuizSceneName = "TextQuiz";
+    private const string PictureQuizSceneName = "PictureQuiz";
     
     private void Start()
     {
@@ -40,7 +40,6 @@ public class BoardController : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
         int currentTravelPoints = PlayerManager.Instance.GetTravelPoints();
-        Debug.Log(currentTravelPoints);
         if (currentTravelPoints != _previousTravelPoints)
         {
             AnimateTravelPointsChange(_previousTravelPoints, currentTravelPoints);
@@ -76,14 +75,15 @@ public class BoardController : MonoBehaviour
     /// <summary>
     /// Debug button to start Text quiz
     /// </summary>
-    public void OnTextQuizPressed()
+    public void OnPictureQuizPressed()
     {
-        StartTextQuiz();
+        StartPictureQuiz();
     }
 
-    private async void StartTextQuiz()
+    private async void StartPictureQuiz()
     {
-        var loadOperation = SceneManager.LoadSceneAsync(TextQuizSceneName, LoadSceneMode.Additive);
+        Debug.Log("Loading PIctures");
+        var loadOperation = SceneManager.LoadSceneAsync(PictureQuizSceneName, LoadSceneMode.Additive);
         while (!loadOperation.isDone)
         {
             await Task.Yield();
