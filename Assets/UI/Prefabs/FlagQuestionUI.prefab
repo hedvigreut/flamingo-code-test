@@ -278,6 +278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 1
   _fadeInCanvasGroup: {fileID: 6546338882322257431}
+  _headerArea: {fileID: 9018152197562697123}
+  _questionArea: {fileID: 4730557056783189600}
   _flagArea: {fileID: 3811540005153021855}
 --- !u!225 &6546338882322257431
 CanvasGroup:
