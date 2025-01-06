@@ -24,6 +24,8 @@ public class BoardController : MonoBehaviour
     private BoardFactory boardFactory;
     [SerializeField] 
     private BoardTile[] tiles;
+    [SerializeField]
+    private GraphicRaycaster raycaster;
     
     private int currentTileIndex;
     private int _previousTravelPoints;
@@ -40,12 +42,13 @@ public class BoardController : MonoBehaviour
     public void MoveSteps(int stepsToMove)
     {
         int newTileIndex = (currentTileIndex + stepsToMove) % tiles.Length;
-        StartCoroutine(MovePlayerPiece(currentTileIndex, newTileIndex));
+        StartCoroutine(MovePlayer(currentTileIndex, newTileIndex));
         currentTileIndex = newTileIndex;
     }
     
-    private IEnumerator MovePlayerPiece(int startIndex, int endIndex)
+    private IEnumerator MovePlayer(int startIndex, int endIndex)
     {
+        raycaster.enabled = false;
         int stepCount = (endIndex >= startIndex) 
             ? endIndex - startIndex 
             : tiles.Length - startIndex + endIndex;
@@ -57,10 +60,19 @@ public class BoardController : MonoBehaviour
             int nextTileIndex = (startIndex + i) % tiles.Length;
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
+            tiles[startIndex].Hop();
             player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
+                .OnKill(() =>
+                {
+                    if (i == stepCount)
+                    {
+                        tiles[nextTileIndex].Land();
+                    }
+                })
                 .SetEase(Ease.OutQuad);
             yield return new WaitForSeconds(playerJumpSpeed);
         }
+        raycaster.enabled = true;
     }
 
     private void OnEnable()
