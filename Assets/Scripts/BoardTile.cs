@@ -5,6 +5,7 @@ using UnityEngine;
 public enum TileType
 {
     Default,
+    Start,
     FlagQuiz,
     PictureQuiz
 }
@@ -19,6 +20,8 @@ public class BoardTile : MonoBehaviour
     [Header("Color settings")]
     [SerializeField] 
     private Color defaultTileColor;
+    [SerializeField] 
+    private Color startColor;
     [SerializeField] 
     private Color flagTileColor;
     [SerializeField] 
@@ -69,6 +72,9 @@ public class BoardTile : MonoBehaviour
             case TileType.Default:
                 _propertyBlock.SetColor(ShaderBaseColor, defaultTileColor);
                 break;
+            case TileType.Start:
+                _propertyBlock.SetColor(ShaderBaseColor, startColor);
+                break;
             case TileType.FlagQuiz:
                 _propertyBlock.SetColor(ShaderBaseColor, flagTileColor);
                 break;
@@ -116,6 +122,8 @@ public class BoardTile : MonoBehaviour
         switch (tileType)
         {
             case TileType.Default:
+                break;
+            case TileType.Start:
                 break;
             case TileType.FlagQuiz:
                 break;

@@ -90,6 +90,8 @@ public class BoardController : MonoBehaviour
         {
             case TileType.Default:
                 break;
+            case TileType.Start:
+                break;
             case TileType.FlagQuiz:
                 StartFlagQuiz();
                 break;

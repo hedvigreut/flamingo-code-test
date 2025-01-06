@@ -19,7 +19,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     [SerializeField]
     private TileType defaultTileType = TileType.Default;
     
-    private TileType[] _allTileTypes;
+    private TileType[] _allQuizTileTypes;
 
     public BoardTile[] GetTiles()
     {
@@ -28,28 +28,37 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
 
     public void Start()
     {
-        _allTileTypes = (TileType[])Enum.GetValues(typeof(TileType));
+        var tileTypes = (TileType[])Enum.GetValues(typeof(TileType));
+        _allQuizTileTypes = tileTypes.Except(TileType.Start).ToArray();
         AssignTileTypes(); 
     }
     
+    /// <summary>
+    /// Assigns tiles so that non-default tiles are never after each other and there is a variable for
+    /// more liklihood of default tiles inbetween quiz type tiles
+    ///  Rule 1: After a non-default tile a default follows
+    /// Rule 2: Randomise the chance of default tile based upon probability setting
+    /// </summary>
     private void AssignTileTypes()
     {
         TileType previousType = defaultTileType;
         for (int i = 0; i < tiles.Length; i++)
         {
             TileType currentType;
-            // Rule 1: After a non-default tile a default follows
-            if (previousType != defaultTileType)
+            if (i == 0)
             {
-                currentType = defaultTileType;
+                currentType = TileType.Start;
             }
             else
             {
-                // Rule 2: Randomise the chance of default tile based upon probability setting
-                currentType = Random.value < probabilityDefaultBetweenCustomTiles
+                // After any non-default tile, a default follows
+                currentType = previousType != defaultTileType
                     ? defaultTileType
-                    : GetRandomNonDefaultTileType();
+                    : (Random.value < probabilityDefaultBetweenCustomTiles
+                        ? defaultTileType
+                        : GetRandomNonDefaultTileType());
             }
+
             tiles[i].ChangeTileType(currentType);
             previousType = currentType;
         }
@@ -57,7 +66,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     
     private TileType GetRandomNonDefaultTileType()
     {
-        TileType[] nonDefaultTileTypes = _allTileTypes.Except(defaultTileType).ToArray();
+        TileType[] nonDefaultTileTypes = _allQuizTileTypes.Except(defaultTileType).ToArray();
         TileType newNonDefaultTile = nonDefaultTileTypes[Random.Range(0, nonDefaultTileTypes.Length)];
         return newNonDefaultTile;
     }
