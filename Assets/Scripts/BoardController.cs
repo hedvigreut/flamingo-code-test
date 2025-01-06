@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Threading.Tasks;
 using DG.Tweening;
@@ -46,6 +45,9 @@ public class BoardController : MonoBehaviour
         _previousTravelPoints = PlayerManager.Instance.GetTravelPoints();
         _travelPointsValueText.text = _previousTravelPoints.ToString();
         tiles = boardFactory.GetTiles();
+        var savedTilePosition = PlayerManager.Instance.GetCurrentPosition();
+        currentTileIndex = savedTilePosition;
+        SnapPlayerToTile(savedTilePosition);
     }
 
     public void OnTravelButtonPressed()
@@ -71,11 +73,11 @@ public class BoardController : MonoBehaviour
             .OnKill(() =>
             {
                 stepsCounterText.text = targetText;
-                StartCoroutine(MovePlayer(currentTileIndex, stepsToMove));
+                StartCoroutine(MovePlayerInSteps(currentTileIndex, stepsToMove));
             });
     }
     
-    private IEnumerator MovePlayer(int startIndex, int stepsToMove)
+    private IEnumerator MovePlayerInSteps(int startIndex, int stepsToMove)
     {
         yield return new WaitForSeconds(0.2f);
         raycaster.enabled = false;
@@ -105,11 +107,20 @@ public class BoardController : MonoBehaviour
         
             yield return new WaitForSeconds(playerJumpSpeed);
             currentTileIndex = nextTileIndex;
+            PlayerManager.Instance.SetCurrentPosition(currentTileIndex);
         }
         // TODO: Replace once we have a transition animation to wait for it
         yield return new WaitForSeconds(0.5f);
         OnLanding();
         raycaster.enabled = true;
+    }
+
+    private void SnapPlayerToTile(int targetTileIndex)
+    {
+        float originalY = transform.position.y;
+        Vector3 targetPosition = tiles[targetTileIndex].transform.position;
+        targetPosition.y = originalY;
+        player.transform.position = targetPosition;
     }
 
     private void OnLanding()

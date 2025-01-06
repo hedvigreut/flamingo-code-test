@@ -1,8 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ModestTree;
 using UnityEngine;
 using Random = UnityEngine.Random;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+[Serializable]
+public struct Board
+{
+    public string boardName;
+    public List<TileType> tileTypes;
+}
 
 public interface IBoardFactory
 {
@@ -12,15 +23,17 @@ public interface IBoardFactory
 public class BoardFactory : MonoBehaviour, IBoardFactory
 {
     [SerializeField, Range(0f, 1f)]
-    [Tooltip("How likely it is to get a default tile inbetween custom tiles")]
+    [Tooltip("How likely it is to get a default tile in between custom tiles")]
     private float probabilityDefaultBetweenCustomTiles = 0.5f;
     [SerializeField] 
     private BoardTile[] tiles;
     [SerializeField]
     private TileType defaultTileType = TileType.Default;
+    [SerializeField]
+    private SavedBoardLayouts boardLayouts;
     
     private TileType[] _allQuizTileTypes;
-
+    
     public BoardTile[] GetTiles()
     {
         return tiles;
@@ -30,7 +43,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     {
         var tileTypes = (TileType[])Enum.GetValues(typeof(TileType));
         _allQuizTileTypes = tileTypes.Except(TileType.Start).ToArray();
-        AssignTileTypes(); 
+        LoadBoardLayout(PlayerManager.Instance.GetCurrentBoardIndex());
     }
     
     /// <summary>
@@ -70,4 +83,69 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
         TileType newNonDefaultTile = nonDefaultTileTypes[Random.Range(0, nonDefaultTileTypes.Length)];
         return newNonDefaultTile;
     }
+    
+    public void Randomize()
+    {
+        var tileTypes = (TileType[])Enum.GetValues(typeof(TileType));
+        _allQuizTileTypes = tileTypes.Except(TileType.Start).ToArray();
+        AssignTileTypes(); 
+    }
+    
+    public void Save()
+    {
+        var board = new Board();
+        board.tileTypes = new List<TileType>();
+        foreach (var tile in tiles)
+        {
+            board.tileTypes.Add(tile.GetTileType());
+        }
+
+        board.boardName = "Default Name";
+        boardLayouts.boards.Add(board);
+    }
+
+    private void LoadBoardLayout(int boardIndex)
+    {
+        if (boardLayouts.boards.IsEmpty())
+        {
+            Randomize();
+            Save();
+            return;
+        }   
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            var savedTileType = boardLayouts.boards[boardIndex].tileTypes[i];
+            tiles[i].ChangeTileType(savedTileType);
+        }
+        Debug.Log($"Loaded board: {boardLayouts.boards[boardIndex].boardName}");
+    }
 }
+
+#if UNITY_EDITOR 
+[CustomEditor(typeof(BoardFactory))]
+public class BoardFactoryEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        GUILayout.Space(10);
+        
+        if (EditorApplication.isPlaying)
+        {
+            BoardFactory boardFactory = (BoardFactory)target;
+            if (GUILayout.Button("Randomize"))
+            {
+                boardFactory.Randomize();
+            }
+            if (GUILayout.Button("Save"))
+            {
+                boardFactory.Save();
+            }
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("To create new boards use buttons here in Play Mode.", MessageType.Info);
+        }
+    }
+}
+#endif
