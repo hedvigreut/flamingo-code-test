@@ -1,12 +1,15 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FlagButton : MonoBehaviour, IAnswerButton
+public class TextButton : MonoBehaviour, IAnswerButton
 {
-    [SerializeField] 
-    private Image flagImage;
-    [SerializeField] 
-    private Image outline;
+    [SerializeField]
+    private Button button;
+    [SerializeField]
+    private TextMeshProUGUI text;
+    [SerializeField]
+    private Image buttonImage;
     [SerializeField]
     private Color correctColor;
     [SerializeField]
@@ -14,15 +17,15 @@ public class FlagButton : MonoBehaviour, IAnswerButton
     [SerializeField] 
     private Animator _animator;
     private const string FinalAnimationState = "Pressed";
-
+    
+    public TextMeshProUGUI GetText()
+    {
+        return text;
+    }
+    
     public void ChangeColor(bool isCorrect)
     {
-        outline.color = isCorrect ? correctColor : incorrectColor;
-    }
-
-    public void SetFlagImage(Sprite flag)
-    {
-        flagImage.sprite = flag;
+        buttonImage.color = isCorrect ? correctColor : incorrectColor;
     }
     
     public bool IsAnimatorAnimationComplete()

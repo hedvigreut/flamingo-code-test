@@ -8,11 +8,9 @@ using UnityEngine.UI;
 public class PictureQuizController : QuizController
 {
     [SerializeField]
-    private Button[] optionButtons;
+    private TextButton[] optionButtons;
     [SerializeField]
     private Image quizImage;
-    [SerializeField]
-    private TextMeshProUGUI[] buttonTexts;
     
     private const string SceneName = "PictureQuiz";
     
@@ -46,8 +44,8 @@ public class PictureQuizController : QuizController
         correctAnswerImage.sprite = quizPicture;
         correctAnswerText.text = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex].Text;
         for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
-        { 
-            buttonTexts[i].text = _currentQuestion.Answers[i].Text;
+        {
+            optionButtons[i].GetText().text = _currentQuestion.Answers[i].Text;
         }
     }
     
@@ -58,14 +56,22 @@ public class PictureQuizController : QuizController
     /// <param name="index">Button Index</param>
     public void OnOptionButtonPressed(int index)
     {
-        Button button = optionButtons[index];
+        TextButton textButton = optionButtons[index];
         bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
-        // flagButton.ChangeColor(isCorrect);
+        textButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
         _currentQuestionIndex++;
         PlayerManager.Instance.SetCurrentPictureQuestionIndex(_currentQuestionIndex);
-        // StartCoroutine(WaitForButtonAnimation(button, isCorrect));
-        SetAnswerVisuals(isCorrect);
+        StartCoroutine(WaitForButtonAnimation(textButton, isCorrect));
+        }
+    
+    private IEnumerator WaitForButtonAnimation(TextButton textButton, bool correct)
+    {
+        raycaster.enabled = false;
+        yield return new WaitUntil(() => textButton.IsAnimatorAnimationComplete());
+        yield return new WaitForSeconds(0.5f);
+        raycaster.enabled = true;
+        SetAnswerVisuals(correct);
     }
     
     protected override void UnloadScene()
