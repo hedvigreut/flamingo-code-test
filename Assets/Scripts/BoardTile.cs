@@ -1,5 +1,13 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
+
+public enum TileType
+{
+    Default,
+    FlagQuiz,
+    PictureQuiz
+}
 
 public class BoardTile : MonoBehaviour
 {
@@ -11,7 +19,9 @@ public class BoardTile : MonoBehaviour
     private MeshRenderer tileRenderer;
     [SerializeField]
     private Color pressColor = Color.white;
-
+    [SerializeField] 
+    private TileType tileType;
+    
     private MaterialPropertyBlock propertyBlock;
     private Color originalColor;
 
@@ -30,6 +40,10 @@ public class BoardTile : MonoBehaviour
     }
 
   public void Hop()
+  {
+      TileEffectAnimation();
+  }
+    private void TileEffectAnimation()
     {
         DOTween.To(
                 () => GetCurrentColor(),
@@ -63,7 +77,19 @@ public class BoardTile : MonoBehaviour
     }
 
     public void Land()
-    { 
-        Debug.Log("Land " + gameObject.name);
+    {
+        Debug.Log($"Landed on {gameObject.name} with type {tileType})");
+        TileEffectAnimation();
+        switch (tileType)
+        {
+            case TileType.Default:
+                break;
+            case TileType.FlagQuiz:
+                break;
+            case TileType.PictureQuiz:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }
