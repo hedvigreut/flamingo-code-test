@@ -2,12 +2,11 @@ using System;
 using System.Linq;
 using ModestTree;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public interface IBoardFactory
 {
-    public void AssignTileTypes();
+    public BoardTile[] GetTiles();
 }
 
 public class BoardFactory : MonoBehaviour, IBoardFactory
@@ -30,10 +29,10 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     public void Start()
     {
         _allTileTypes = (TileType[])Enum.GetValues(typeof(TileType));
-        AssignTileTypes();
+        AssignTileTypes(); 
     }
     
-    public void AssignTileTypes()
+    private void AssignTileTypes()
     {
         TileType previousType = defaultTileType;
         for (int i = 0; i < tiles.Length; i++)
