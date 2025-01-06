@@ -31,13 +31,17 @@ public class PictureQuizController : QuizController
         }
         else
         {
-            Debug.LogWarning("Failed to parse flag data.");
+            Debug.LogWarning("Failed to parse picture quiz data.");
+
         }
     }
     
-    protected override void SetQuestionVisuals()
+    /// <summary>
+    /// Sets the flag images on the buttons from the ids
+    /// </summary>
+    private void SetQuestionVisuals()
     {
-        base.SetQuestionVisuals();
+        questionText.text = _currentQuestion.Question;
         string imageID = _currentQuestion.CustomImageID;
         Sprite quizPicture = GetSpriteByID(imageID,  true);
         quizImage.sprite = quizPicture;

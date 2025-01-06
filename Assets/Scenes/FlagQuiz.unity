@@ -467,26 +467,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adeb60c0df5d64a93bf778c25bc02c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flagQuestionText: {fileID: 5284184137343310132}
-  _rewardUI: {fileID: 8311385088257166443}
-  _correctAnswerFlag: {fileID: 9163141026939843746}
-  _correctAnswerText: {fileID: 9163141026939843745}
-  _answerMessage: {fileID: 802408450993035934}
-  _rewardValue: {fileID: 2668870554788163388}
-  _raycaster: {fileID: 2099251577}
-  _flagButtons:
-  - {fileID: 1888658385}
-  - {fileID: 1505672714}
-  - {fileID: 1349431012}
-  - {fileID: 691595674}
-  _correctReward: 5000
-  _incorrectReward: 2000
+  questionText: {fileID: 5284184137343310132}
+  rewardUI: {fileID: 9163141026939843748}
+  correctAnswerImage: {fileID: 9163141026939843746}
+  correctAnswerText: {fileID: 9163141026939843745}
+  answerMessage: {fileID: 802408450993035934}
+  rewardValue: {fileID: 2668870554788163388}
+  raycaster: {fileID: 2099251577}
   _rewardsAnimator: {fileID: 9163141026939843747}
   _totalTime: 15
   _currentTimeText: {fileID: 3669193159697998880}
   _progressSlider: {fileID: 1861207425}
-  _quizData: {fileID: 4900000, guid: 4482a386492e14526b953f542090ddda, type: 3}
-  _flagSpritesToIds:
+  _correctReward: 5000
+  _incorrectReward: 2000
+  _quizVisuals:
   - sprite: {fileID: 21300000, guid: aa7afeb4cdb604109a8aa4c8e19c5207, type: 3}
     ImageID: ca
     name: Canada
@@ -499,7 +493,13 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: f75ef7a79354a4bca9e8b6f856f82a8d, type: 3}
     ImageID: us
     name: United States
-  _quizReader: {fileID: 103924046}
+  _quizData: {fileID: 4900000, guid: 4482a386492e14526b953f542090ddda, type: 3}
+  quizReader: {fileID: 103924046}
+  _flagButtons:
+  - {fileID: 1888658385}
+  - {fileID: 1505672714}
+  - {fileID: 1349431012}
+  - {fileID: 691595674}
 --- !u!114 &1349431012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8600667678569418502, guid: 093ca73ffe0e845e9b27e005f4b9ecfc,
@@ -1418,12 +1418,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 093ca73ffe0e845e9b27e005f4b9ecfc, type: 3}
---- !u!1 &8311385088257166443 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 234694532438584426, guid: 5b58bfb233ec644ab8ae6ccc752a61f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 9163141026939843744}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9163141026939843744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1574,6 +1568,12 @@ MonoBehaviour:
 --- !u!95 &9163141026939843747 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6937948743360329678, guid: 5b58bfb233ec644ab8ae6ccc752a61f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 9163141026939843744}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9163141026939843748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 234694532438584426, guid: 5b58bfb233ec644ab8ae6ccc752a61f5,
     type: 3}
   m_PrefabInstance: {fileID: 9163141026939843744}
   m_PrefabAsset: {fileID: 0}

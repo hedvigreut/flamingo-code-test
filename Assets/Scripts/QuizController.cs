@@ -9,7 +9,7 @@ public abstract class QuizController : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField]
-    private TextMeshProUGUI questionText;
+    protected TextMeshProUGUI questionText;
     [SerializeField] 
     private GameObject rewardUI;
     [SerializeField] protected Image correctAnswerImage;
@@ -94,14 +94,6 @@ public abstract class QuizController : MonoBehaviour
             _countingDown = false;                    
         }                                             
     }                                                                        
-
-    /// <summary>
-    /// Sets the flag images on the buttons from the ids
-    /// </summary>
-    protected virtual void SetQuestionVisuals()
-    {
-        questionText.text = _currentQuestion.Question;
-    }
 
     protected void SetAnswerVisuals(bool isCorrect)
     {
