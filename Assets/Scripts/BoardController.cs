@@ -26,8 +26,7 @@ public class BoardController : MonoBehaviour
     private float playerJumpSpeed = 0.3f;
     [SerializeField] 
     private BoardFactory boardFactory;
-    [SerializeField] 
-    private BoardTile[] tiles;
+    
     [SerializeField]
     private GraphicRaycaster raycaster;
     [FormerlySerializedAs("maxSteps")]
@@ -36,6 +35,7 @@ public class BoardController : MonoBehaviour
     private int randomMaxSteps = 10;
     [Header("Debug options")]
     
+    private BoardTile[] tiles;
     private int currentTileIndex;
     private int _previousTravelPoints;
     private const string FlagQuizSceneName = "FlagQuiz";
