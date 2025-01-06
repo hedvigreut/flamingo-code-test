@@ -2880,6 +2880,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614185640698063112, guid: e34ebef78b03848318ccb1a01f71d783,
+        type: 3}
+      propertyPath: tileType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

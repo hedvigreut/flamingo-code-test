@@ -344,3 +344,7 @@ MonoBehaviour:
   pressDownScale: 0.2
   tileRenderer: {fileID: 5267236974447366494}
   pressColor: {r: 1, g: 0.95851475, b: 0.8, a: 1}
+  tileType: 0
+  defaultTileColor: {r: 1, g: 0.98039216, b: 0.60784316, a: 1}
+  flagTileColor: {r: 0.6862745, g: 0.6745098, b: 1, a: 1}
+  pictureTileColor: {r: 0.5686275, g: 0.9098039, b: 0.98039216, a: 1}
