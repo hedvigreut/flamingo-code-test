@@ -117,7 +117,7 @@ public class BoardTile : MonoBehaviour
     
     public void Land()
     {
-        Debug.Log($"Landed on {gameObject.name} with type {tileType})");
+        // Debug.Log($"Landed on {gameObject.name} with type {tileType})");
         TileEffectAnimation();
         switch (tileType)
         {

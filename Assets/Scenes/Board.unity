@@ -5107,13 +5107,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _travelButton: {fileID: 871975786}
+  stepsCounterText: {fileID: 460721195}
   _travelPointsValueText: {fileID: 158064481}
   player: {fileID: 2018558642}
   playerJumpSpeed: 0.25
   boardFactory: {fileID: 1697195308}
   tiles: []
   raycaster: {fileID: 2099251577}
-  maxSteps: 10
+  randomMaxSteps: 10
 --- !u!4 &1268212494
 Transform:
   m_ObjectHideFlags: 0
@@ -8094,6 +8095,6 @@ SceneRoots:
   - {fileID: 2099251580}
   - {fileID: 2006086959}
   - {fileID: 105478313}
-  - {fileID: 1268212494}
   - {fileID: 1697195307}
   - {fileID: 1246194238}
+  - {fileID: 1268212494}

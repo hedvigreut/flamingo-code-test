@@ -15,6 +15,8 @@ public class BoardController : MonoBehaviour
     [SerializeField]
     private Button _travelButton;
     [SerializeField] 
+    private TextMeshProUGUI stepsCounterText;
+    [SerializeField] 
     private TextMeshProUGUI _travelPointsValueText;
     
     [Header("Game settings")]
@@ -48,18 +50,34 @@ public class BoardController : MonoBehaviour
 
     public void OnTravelButtonPressed()
     {
-        MoveSteps(Random.Range(0, randomMaxSteps + 1));
+        MoveSteps(Random.Range(1, randomMaxSteps + 1));
     }
     
     private void MoveSteps(int stepsToMove)
     {
-        int stepCount = stepsToMove;
-        int startIndex = currentTileIndex;
-        StartCoroutine(MovePlayer(startIndex, stepCount));
+        AnimateStepsCounter(stepsToMove);
+    }
+    
+    private void AnimateStepsCounter(int stepsToMove)
+    {
+        string targetText = stepsToMove.ToString("00");
+        stepsCounterText.transform.DOScaleY(-1f, 0.1f)
+            .SetEase(Ease.Linear)  
+            .SetLoops(10, LoopType.Yoyo)
+            .OnUpdate(() => 
+            {
+                stepsCounterText.text = Random.Range(0, 100).ToString("00");
+            })
+            .OnKill(() =>
+            {
+                stepsCounterText.text = targetText;
+                StartCoroutine(MovePlayer(currentTileIndex, stepsToMove));
+            });
     }
     
     private IEnumerator MovePlayer(int startIndex, int stepsToMove)
     {
+        yield return new WaitForSeconds(0.2f);
         raycaster.enabled = false;
         int totalTiles = tiles.Length;
         float originalY = player.transform.position.y;
