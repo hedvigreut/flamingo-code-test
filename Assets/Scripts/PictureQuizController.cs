@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,13 +40,15 @@ public class PictureQuizController : QuizController
     protected override void SetQuestionVisuals()
     {
         base.SetQuestionVisuals();
-            string imageID = _currentQuestion.CustomImageID;
-            Sprite quizPicture = GetSpriteByID(imageID,  true);
-            quizImage.sprite = quizPicture;
-            for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
-            {
-                buttonTexts[i].text = _currentQuestion.Answers[i].Text;
-            }
+        string imageID = _currentQuestion.CustomImageID;
+        Sprite quizPicture = GetSpriteByID(imageID,  true);
+        quizImage.sprite = quizPicture;
+        correctAnswerImage.sprite = quizPicture;
+        correctAnswerText.text = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex].Text;
+        for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
+        { 
+            buttonTexts[i].text = _currentQuestion.Answers[i].Text;
+        }
     }
     
     /// <summary>
@@ -60,19 +63,14 @@ public class PictureQuizController : QuizController
         // flagButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
         _currentQuestionIndex++;
-        PlayerManager.Instance.SetCurrentFlagQuestionIndex(_currentQuestionIndex);
+        PlayerManager.Instance.SetCurrentPictureQuestionIndex(_currentQuestionIndex);
         // StartCoroutine(WaitForButtonAnimation(button, isCorrect));
         SetAnswerVisuals(isCorrect);
     }
     
-    protected override void SetAnswerVisuals(bool isCorrect)
-    {
-        base.SetAnswerVisuals(isCorrect);
-        correctAnswerImage.sprite = GetSpriteByID(_currentAnswer.ImageID, customID: true);
-    }
-    
     protected override void UnloadScene()
     {
+        DOTween.KillAll();
         SceneManager.UnloadSceneAsync(SceneName);
     }
 }

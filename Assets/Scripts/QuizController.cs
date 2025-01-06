@@ -103,9 +103,8 @@ public abstract class QuizController : MonoBehaviour
         questionText.text = _currentQuestion.Question;
     }
 
-    protected virtual void SetAnswerVisuals(bool isCorrect)
+    protected void SetAnswerVisuals(bool isCorrect)
     {
-        correctAnswerText.text = GetCountryNameByID(_currentAnswer.ImageID);
         answerMessage.text = isCorrect ? correctAnswerMessage : incorrectAnswerMessage;
         rewardValue.text = isCorrect ? _correctReward.ToString() : _incorrectReward.ToString();
         rewardUI.SetActive(true);
@@ -164,7 +163,9 @@ public abstract class QuizController : MonoBehaviour
         {
             string compareID = customID ? visualsData.sprite.name : visualsData.ImageID;
             if (compareID == imageID)
+            {
                 return visualsData.sprite;
+            }
         }
         return null;
     }

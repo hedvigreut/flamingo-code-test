@@ -206,6 +206,7 @@ public class FlagQuizController : MonoBehaviour
     
     private void UnloadScene()
     {
+        DOTween.KillAll();
         SceneManager.UnloadSceneAsync(SceneName);
     }
 
