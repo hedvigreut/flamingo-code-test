@@ -135,12 +135,12 @@ public abstract class QuizController : MonoBehaviour
         {
             yield return null;
         }
-        // _rewardsAnimator.SetBool(animatorOpenState, false);
-        //
-        // while (!IsAnimatorDone(_rewardsAnimator, animatorCloseState))
-        // {
-        //     yield return null;
-        // }
+        _rewardsAnimator.SetBool(animatorOpenState, false);
+        
+        while (!IsAnimatorDone(_rewardsAnimator, animatorCloseState))
+        {
+            yield return null;
+        }
         UnloadScene();
     }
     
