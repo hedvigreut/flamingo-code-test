@@ -98,6 +98,10 @@ public class BoardController : MonoBehaviour
                     if (i < stepsToMove)
                     {
                         tiles[nextTileIndex].Hop();
+                        if (tiles[nextTileIndex].GetTileType() == TileType.Start && nextTileIndex == 0)
+                        {
+                            HopOverStartTile();
+                        }
                     }
                     else
                     {
@@ -115,8 +119,17 @@ public class BoardController : MonoBehaviour
         raycaster.enabled = true;
     }
 
+    private void HopOverStartTile()
+    {
+        var currentBoardIndex = PlayerManager.Instance.GetCurrentBoardIndex();
+        currentBoardIndex++;
+        PlayerManager.Instance.SetCurrentBoardIndex(currentBoardIndex);
+        boardFactory.LoadBoardLayout(currentBoardIndex++);
+    }
+
     private void SnapPlayerToTile(int targetTileIndex)
     {
+        
         float originalY = transform.position.y;
         Vector3 targetPosition = tiles[targetTileIndex].transform.position;
         targetPosition.y = originalY;
@@ -131,6 +144,7 @@ public class BoardController : MonoBehaviour
             case TileType.Default:
                 break;
             case TileType.Start:
+                HopOverStartTile();
                 break;
             case TileType.FlagQuiz:
                 StartFlagQuiz();

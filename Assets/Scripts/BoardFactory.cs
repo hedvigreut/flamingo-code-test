@@ -104,14 +104,21 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
         boardLayouts.boards.Add(board);
     }
 
-    private void LoadBoardLayout(int boardIndex)
+    public void LoadBoardLayout(int boardIndex)
     {
         if (boardLayouts.boards.IsEmpty())
         {
             Randomize();
             Save();
             return;
-        }   
+        }
+
+        if (boardIndex >= boardLayouts.boards.Count)
+        {
+            Debug.LogWarning("Board Index is out of range, loading first board");
+            PlayerManager.Instance.SetCurrentBoardIndex(0);
+            boardIndex = 0;
+        }
         for (int i = 0; i < tiles.Length; i++)
         {
             var savedTileType = boardLayouts.boards[boardIndex].tileTypes[i];
