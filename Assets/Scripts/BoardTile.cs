@@ -48,6 +48,11 @@ public class BoardTile : MonoBehaviour
         ChangeTileColor(tileType);
     }
 
+    public TileType GetTileType()
+    {
+        return tileType;
+    }
+
     /// <summary>
     /// Change the tile type
     /// </summary>

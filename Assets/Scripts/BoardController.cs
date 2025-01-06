@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading.Tasks;
 using DG.Tweening;
@@ -76,9 +77,30 @@ public class BoardController : MonoBehaviour
             yield return new WaitForSeconds(playerJumpSpeed);
             currentTileIndex = nextTileIndex;
         }
+        // TODO: Replace once we have a transition animation to wait for it
+        yield return new WaitForSeconds(0.5f);
+        OnLanding();
         raycaster.enabled = true;
     }
 
+    private void OnLanding()
+    {
+        TileType landedTileType = tiles[currentTileIndex].GetTileType();
+        switch (landedTileType)
+        {
+            case TileType.Default:
+                break;
+            case TileType.FlagQuiz:
+                StartFlagQuiz();
+                break;
+            case TileType.PictureQuiz:
+                StartPictureQuiz();
+                break;
+            default:
+                Debug.LogWarning("Landed on unknown landing type");
+                break;
+        }
+    }
 
     private void OnEnable()
     {
