@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -820,6 +821,20 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1040d0f7edb664be49cde66eb268a752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2098653516}
+  followDuration: 0.1
 --- !u!1 &341155187
 GameObject:
   m_ObjectHideFlags: 0
@@ -4393,6 +4408,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614185640698063112, guid: e34ebef78b03848318ccb1a01f71d783,
+        type: 3}
+      propertyPath: tileType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5698,6 +5718,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9169b7404d89d425ab7126b8fdcf9433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2098653516 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1589785898346101236, guid: 3e7cb15866b2044c4821d261c3bfeeb2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018558639}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2099251576
 GameObject:
   m_ObjectHideFlags: 0
@@ -6190,7 +6216,7 @@ PrefabInstance:
     - target: {fileID: 6368456256874804158, guid: 3d74121625596425285cf78b9855f929,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6368456256874804158, guid: 3d74121625596425285cf78b9855f929,
         type: 3}
