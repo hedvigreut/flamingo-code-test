@@ -41,31 +41,29 @@ public class BoardController : MonoBehaviour
     
     public void MoveSteps(int stepsToMove)
     {
-        int newTileIndex = (currentTileIndex + stepsToMove) % tiles.Length;
-        StartCoroutine(MovePlayer(currentTileIndex, newTileIndex));
-        currentTileIndex = newTileIndex;
+        int stepCount = stepsToMove;
+        int startIndex = currentTileIndex;
+        StartCoroutine(MovePlayer(startIndex, stepCount));
     }
     
-    private IEnumerator MovePlayer(int startIndex, int endIndex)
+    private IEnumerator MovePlayer(int startIndex, int stepsToMove)
     {
         raycaster.enabled = false;
-        int stepCount = (endIndex >= startIndex) 
-            ? endIndex - startIndex 
-            : tiles.Length - startIndex + endIndex;
-
+        int totalTiles = tiles.Length;
         float originalY = player.transform.position.y;
-
-        for (int i = 1; i <= stepCount; i++)
+    
+        for (int i = 1; i <= stepsToMove; i++)
         {
-            int nextTileIndex = (startIndex + i) % tiles.Length;
+            // Using modulo to set index if needed to loop around the board
+            int nextTileIndex = (startIndex + i) % totalTiles;
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
-
+        
             player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
                 .SetEase(Ease.OutQuad)
                 .OnKill(() =>
                 {
-                    if (nextTileIndex != endIndex)
+                    if (i < stepsToMove)
                     {
                         tiles[nextTileIndex].Hop();
                     }
@@ -74,8 +72,9 @@ public class BoardController : MonoBehaviour
                         tiles[nextTileIndex].Land();
                     }
                 });
-
+        
             yield return new WaitForSeconds(playerJumpSpeed);
+            currentTileIndex = nextTileIndex;
         }
         raycaster.enabled = true;
     }
