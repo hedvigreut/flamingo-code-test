@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class BoardController : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class BoardController : MonoBehaviour
     private BoardTile[] tiles;
     [SerializeField]
     private GraphicRaycaster raycaster;
+    [FormerlySerializedAs("maxSteps")]
+    [SerializeField] 
+    [Range(1,10)]
+    private int randomMaxSteps = 10;
+    [Header("Debug options")]
     
     private int currentTileIndex;
     private int _previousTravelPoints;
@@ -39,8 +45,13 @@ public class BoardController : MonoBehaviour
         _travelPointsValueText.text = _previousTravelPoints.ToString();
         tiles = boardFactory.GetTiles();
     }
+
+    public void OnTravelButtonPressed()
+    {
+        MoveSteps(Random.Range(0, randomMaxSteps + 1));
+    }
     
-    public void MoveSteps(int stepsToMove)
+    private void MoveSteps(int stepsToMove)
     {
         int stepCount = stepsToMove;
         int startIndex = currentTileIndex;
