@@ -52,7 +52,7 @@ public class BoardController : MonoBehaviour
         int stepCount = (endIndex >= startIndex) 
             ? endIndex - startIndex 
             : tiles.Length - startIndex + endIndex;
-        
+
         float originalY = player.transform.position.y;
 
         for (int i = 1; i <= stepCount; i++)
@@ -60,20 +60,28 @@ public class BoardController : MonoBehaviour
             int nextTileIndex = (startIndex + i) % tiles.Length;
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
-            tiles[startIndex].Hop();
+
+            // Start the jump and use OnKill to execute after the tween finishes
             player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
+                .SetEase(Ease.OutQuad)
                 .OnKill(() =>
                 {
-                    if (i == stepCount)
+                    if (nextTileIndex != endIndex)
+                    {
+                        tiles[nextTileIndex].Hop();
+                    }
+                    else
                     {
                         tiles[nextTileIndex].Land();
                     }
-                })
-                .SetEase(Ease.OutQuad);
+                });
+
             yield return new WaitForSeconds(playerJumpSpeed);
         }
+
         raycaster.enabled = true;
     }
+
 
     private void OnEnable()
     {
