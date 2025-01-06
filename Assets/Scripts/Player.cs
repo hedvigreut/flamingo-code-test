@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private ParticleSystem particleSystem;
+    public void PlayCoinEffect()
     {
-        
+        particleSystem.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayTravelPointsEffect(int coinValue)
     {
-        
+        Debug.Log("Play travel points");
     }
 }

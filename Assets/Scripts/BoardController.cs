@@ -20,6 +20,8 @@ public class BoardController : MonoBehaviour
     
     [Header("Game settings")]
     [SerializeField] 
+    private int travelPointRewardOnEmptyTile = 1000;
+    [SerializeField] 
     private Player player;
     [FormerlySerializedAs("jumpSpeed")] [SerializeField]
     private float playerJumpSpeed = 0.3f;
@@ -129,7 +131,6 @@ public class BoardController : MonoBehaviour
 
     private void SnapPlayerToTile(int targetTileIndex)
     {
-        
         float originalY = transform.position.y;
         Vector3 targetPosition = tiles[targetTileIndex].transform.position;
         targetPosition.y = originalY;
@@ -142,6 +143,9 @@ public class BoardController : MonoBehaviour
         switch (landedTileType)
         {
             case TileType.Default:
+                player.PlayCoinEffect();
+                player.PlayTravelPointsEffect(travelPointRewardOnEmptyTile);
+                PlayerManager.Instance.AddTravelPoints(travelPointRewardOnEmptyTile);
                 break;
             case TileType.Start:
                 HopOverStartTile();
