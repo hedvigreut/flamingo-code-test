@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ public class PictureQuizController : QuizController
     private Button[] optionButtons;
     [SerializeField]
     private Image quizImage;
+    [SerializeField]
+    private TextMeshProUGUI[] buttonTexts;
     
     private const string SceneName = "PictureQuiz";
     
@@ -36,19 +39,13 @@ public class PictureQuizController : QuizController
     protected override void SetQuestionVisuals()
     {
         base.SetQuestionVisuals();
-        for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
-        {
             string imageID = _currentQuestion.CustomImageID;
             Sprite quizPicture = GetSpriteByID(imageID,  true);
-            if (quizPicture != null)
+            quizImage.sprite = quizPicture;
+            for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
             {
-                quizImage.sprite = quizPicture;
+                buttonTexts[i].text = _currentQuestion.Answers[i].Text;
             }
-            else
-            {
-                Debug.LogWarning($"No sprite found for ImageID: {imageID}");
-            }
-        }
     }
     
     /// <summary>
@@ -64,16 +61,14 @@ public class PictureQuizController : QuizController
         SetTravelPoints(isCorrect: isCorrect);
         _currentQuestionIndex++;
         PlayerManager.Instance.SetCurrentFlagQuestionIndex(_currentQuestionIndex);
-        StartCoroutine(WaitForButtonAnimation(button, isCorrect));
+        // StartCoroutine(WaitForButtonAnimation(button, isCorrect));
+        SetAnswerVisuals(isCorrect);
     }
     
-    private IEnumerator WaitForButtonAnimation(Button button, bool correct)
+    protected override void SetAnswerVisuals(bool isCorrect)
     {
-        raycaster.enabled = false;
-        //yield return new WaitUntil(() => button.IsAnimatorAnimationComplete());
-        yield return new WaitForSeconds(0.5f);
-        raycaster.enabled = true;
-        SetAnswerVisuals(correct);
+        base.SetAnswerVisuals(isCorrect);
+        correctAnswerImage.sprite = GetSpriteByID(_currentAnswer.ImageID, customID: true);
     }
     
     protected override void UnloadScene()

@@ -3,9 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using System.Linq;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
 
 public abstract class QuizController : MonoBehaviour
 {
@@ -14,8 +12,7 @@ public abstract class QuizController : MonoBehaviour
     private TextMeshProUGUI questionText;
     [SerializeField] 
     private GameObject rewardUI;
-    [SerializeField] 
-    private Image correctAnswerImage;
+    [SerializeField] protected Image correctAnswerImage;
     [SerializeField] 
     protected TextMeshProUGUI correctAnswerText;
     [SerializeField] 
@@ -106,10 +103,9 @@ public abstract class QuizController : MonoBehaviour
         questionText.text = _currentQuestion.Question;
     }
 
-    protected void SetAnswerVisuals(bool isCorrect)
+    protected virtual void SetAnswerVisuals(bool isCorrect)
     {
         correctAnswerText.text = GetCountryNameByID(_currentAnswer.ImageID);
-        correctAnswerImage.sprite = GetSpriteByID(_currentAnswer.ImageID);
         answerMessage.text = isCorrect ? correctAnswerMessage : incorrectAnswerMessage;
         rewardValue.text = isCorrect ? _correctReward.ToString() : _incorrectReward.ToString();
         rewardUI.SetActive(true);
@@ -140,12 +136,12 @@ public abstract class QuizController : MonoBehaviour
         {
             yield return null;
         }
-        _rewardsAnimator.SetBool(animatorOpenState, false);
-
-        while (!IsAnimatorDone(_rewardsAnimator, animatorCloseState))
-        {
-            yield return null;
-        }
+        // _rewardsAnimator.SetBool(animatorOpenState, false);
+        //
+        // while (!IsAnimatorDone(_rewardsAnimator, animatorCloseState))
+        // {
+        //     yield return null;
+        // }
         UnloadScene();
     }
     
