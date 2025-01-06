@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BoardController : MonoBehaviour
@@ -13,6 +15,17 @@ public class BoardController : MonoBehaviour
     [SerializeField] 
     private TextMeshProUGUI _travelPointsValueText;
     
+    [Header("Game settings")]
+    [SerializeField] 
+    private Player player;
+    [FormerlySerializedAs("jumpSpeed")] [SerializeField]
+    private float playerJumpSpeed = 0.3f;
+    [SerializeField] 
+    private BoardFactory boardFactory;
+    [SerializeField] 
+    private BoardTile[] tiles;
+    
+    private int currentTileIndex;
     private int _previousTravelPoints;
     private const string FlagQuizSceneName = "FlagQuiz";
     private const string PictureQuizSceneName = "PictureQuiz";
@@ -21,6 +34,33 @@ public class BoardController : MonoBehaviour
     {
         _previousTravelPoints = PlayerManager.Instance.GetTravelPoints();
         _travelPointsValueText.text = _previousTravelPoints.ToString();
+        tiles = boardFactory.GetTiles();
+    }
+    
+    public void MoveSteps(int stepsToMove)
+    {
+        int newTileIndex = (currentTileIndex + stepsToMove) % tiles.Length;
+        StartCoroutine(MovePlayerPiece(currentTileIndex, newTileIndex));
+        currentTileIndex = newTileIndex;
+    }
+    
+    private IEnumerator MovePlayerPiece(int startIndex, int endIndex)
+    {
+        int stepCount = (endIndex >= startIndex) 
+            ? endIndex - startIndex 
+            : tiles.Length - startIndex + endIndex;
+        
+        float originalY = player.transform.position.y;
+
+        for (int i = 1; i <= stepCount; i++)
+        {
+            int nextTileIndex = (startIndex + i) % tiles.Length;
+            Vector3 targetPosition = tiles[nextTileIndex].transform.position;
+            targetPosition.y = originalY;
+            player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
+                .SetEase(Ease.OutQuad);
+            yield return new WaitForSeconds(playerJumpSpeed);
+        }
     }
 
     private void OnEnable()
