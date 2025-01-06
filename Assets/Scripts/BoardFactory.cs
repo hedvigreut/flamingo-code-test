@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using ModestTree;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,7 +12,9 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     
     [SerializeField] 
     private BoardTile[] tiles;
-
+    [SerializeField]
+    private TileType defaultTileType = TileType.Default;
+    
     private TileType[] _allTileTypes;
 
     public BoardTile[] GetTiles()
@@ -27,26 +27,24 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
         _allTileTypes = (TileType[])Enum.GetValues(typeof(TileType));
         AssignTileTypes();
     }
-
+    
     public void AssignTileTypes()
     {
-        TileType previousType = new TileType();
-        foreach (var tile in tiles)
+        TileType previousType = defaultTileType;
+        for (int i = 0; i < tiles.Length; i++)
         {
-            var randomType = _allTileTypes[Random.Range(0, _allTileTypes.Length)];
-            if (randomType == previousType)
+            TileType currentType;
+            if (previousType != defaultTileType)
             {
-                randomType = GetNewRandomTileType(randomType);
+                currentType = defaultTileType;
             }
-            tile.ChangeTileType(randomType);
-            previousType = randomType;
+            else
+            {
+                currentType = _allTileTypes[Random.Range(0, _allTileTypes.Length)];
+            }
+
+            tiles[i].ChangeTileType(currentType);
+            previousType = currentType;
         }
-    }
-    
-    private TileType GetNewRandomTileType(TileType typeToAvoid)
-    {
-        TileType[] arrayWithoutTypeToAvoid = _allTileTypes.Except(typeToAvoid).ToArray();
-        TileType newType = arrayWithoutTypeToAvoid[Random.Range(0, arrayWithoutTypeToAvoid.Length)];
-        return newType;
     }
 }
