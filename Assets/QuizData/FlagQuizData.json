@@ -1,79 +1,25 @@
 {
-  "questions": [
+  "ID": "085e0503-f3b3-49d8-8d2d-6f833ce403d3",
+  "QuestionType": 1,
+  "Question": "Which flag belongs to Canada?",
+  "CustomImageID": null,
+  "Answers": [
     {
-      "ID": "085e0503-f3b3-49d8-8d2d-6f833ce403d3",
-      "QuestionType": 1,
-      "Question": "Which flag belongs to Canada?",
-      "CustomImageID": null,
-      "Answers": [
-        {
-          "ImageID": "ie",
-          "Text": null
-        },
-        {
-          "ImageID": "nz",
-          "Text": null
-        },
-        {
-          "ImageID": "us",
-          "Text": null
-        },
-        {
-          "ImageID": "ca",
-          "Text": null
-        }
-      ],
-      "CorrectAnswerIndex": 3
+      "ImageID": "ie",
+      "Text": null
     },
     {
-      "ID": "d6e8b28a-c5bc-4b99-8b6b-b1a6a85c0d3f",
-      "QuestionType": 1,
-      "Question": "Which flag belongs to the United States?",
-      "CustomImageID": null,
-      "Answers": [
-        {
-          "ImageID": "us",
-          "Text": null
-        },
-        {
-          "ImageID": "ca",
-          "Text": null
-        },
-        {
-          "ImageID": "ie",
-          "Text": null
-        },
-        {
-          "ImageID": "nz",
-          "Text": null
-        }
-      ],
-      "CorrectAnswerIndex": 0
+      "ImageID": "nz",
+      "Text": null
     },
     {
-      "ID": "f70922db-67b3-40a1-b74f-7d497bb94a0e",
-      "QuestionType": 1,
-      "Question": "Which flag belongs to New Zealand?",
-      "CustomImageID": null,
-      "Answers": [
-        {
-          "ImageID": "ie",
-          "Text": null
-        },
-        {
-          "ImageID": "us",
-          "Text": null
-        },
-        {
-          "ImageID": "ca",
-          "Text": null
-        },
-        {
-          "ImageID": "nz",
-          "Text": null
-        }
-      ],
-      "CorrectAnswerIndex": 3
+      "ImageID": "us",
+      "Text": null
+    },
+    {
+      "ImageID": "ca",
+      "Text": null
     }
-  ]
+  ],
+  "CorrectAnswerIndex": 3
 }

@@ -1,0 +1,104 @@
+{
+  "questions": [
+    {
+      "ID": "80cb8d34-2793-44b6-a797-217ce3c9587d",
+      "QuestionType": 0,
+      "Question": "What is the capital of Germany?",
+      "CustomImageID": "loc_berlin",
+      "Answers": [
+        {
+          "ImageID": null,
+          "Text": "Amsterdam"
+        },
+        {
+          "ImageID": null,
+          "Text": "Berlin"
+        },
+        {
+          "ImageID": null,
+          "Text": "Prague"
+        },
+        {
+          "ImageID": null,
+          "Text": "Riga"
+        }
+      ],
+      "CorrectAnswerIndex": 1
+    },
+    {
+      "ID": "b1d5b5fc-b7d4-45b9-848e-05f9a66e8a97",
+      "QuestionType": 0,
+      "Question": "What is the capital of Latvia?",
+      "CustomImageID": "loc_riga",
+      "Answers": [
+        {
+          "ImageID": null,
+          "Text": "Riga"
+        },
+        {
+          "ImageID": null,
+          "Text": "Prague"
+        },
+        {
+          "ImageID": null,
+          "Text": "Berlin"
+        },
+        {
+          "ImageID": null,
+          "Text": "Amsterdam"
+        }
+      ],
+      "CorrectAnswerIndex": 0
+    },
+    {
+      "ID": "d4b5d8c4-9320-4f7a-a3d6-ff7b6a8ff75f",
+      "QuestionType": 0,
+      "Question": "What is the capital of the Czech Republic?",
+      "CustomImageID": "loc_prague",
+      "Answers": [
+        {
+          "ImageID": null,
+          "Text": "Prague"
+        },
+        {
+          "ImageID": null,
+          "Text": "Berlin"
+        },
+        {
+          "ImageID": null,
+          "Text": "Amsterdam"
+        },
+        {
+          "ImageID": null,
+          "Text": "Riga"
+        }
+      ],
+      "CorrectAnswerIndex": 0
+    },
+    {
+      "ID": "f4bde02a-badd-4b56-a1f7-486f5a20402b",
+      "QuestionType": 0,
+      "Question": "What is the capital of the Netherlands?",
+      "CustomImageID": "loc_amsterdam",
+      "Answers": [
+        {
+          "ImageID": null,
+          "Text": "Prague"
+        },
+        {
+          "ImageID": null,
+          "Text": "Amsterdam"
+        },
+        {
+          "ImageID": null,
+          "Text": "Riga"
+        },
+        {
+          "ImageID": null,
+          "Text": "Berlin"
+        }
+      ],
+      "CorrectAnswerIndex": 1
+    }
+  ]
+}
