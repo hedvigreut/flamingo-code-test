@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum TileType
 {
@@ -49,6 +50,7 @@ public class BoardTile : MonoBehaviour
     private void Start()
     {
         ChangeTileColor(tileType);
+        Wobble();
     }
 
     public TileType GetTileType()
@@ -88,14 +90,15 @@ public class BoardTile : MonoBehaviour
         tileRenderer.SetPropertyBlock(_propertyBlock);
     }
     public void Hop()
-  {
+    {
       _originalColor = _propertyBlock.HasProperty(ShaderBaseColor) 
           ? _propertyBlock.GetColor(ShaderBaseColor) 
           : tileRenderer.sharedMaterial.HasProperty(ShaderBaseColor) 
               ? tileRenderer.sharedMaterial.GetColor(ShaderBaseColor) 
               : Color.white;
       TileEffectAnimation();
-  }
+    }
+    
     private void TileEffectAnimation()
     {
         DOTween.To(
@@ -113,6 +116,15 @@ public class BoardTile : MonoBehaviour
         tileRenderer.transform.localScale = new Vector3(tileRenderer.transform.localScale.x, pressedScaleY, tileRenderer.transform.localScale.z);
         tileRenderer.transform.DOScaleY(currentScaleY, pressDuration)
             .SetEase(Ease.OutBounce);
+    }
+    
+    public void Wobble()
+    {
+        float currentScaleY = tileRenderer.transform.localScale.y;
+        float pressedScaleY = currentScaleY * pressDownScale;
+        tileRenderer.transform.DOScaleY(pressedScaleY, 0.2f)
+            .SetEase(Ease.OutBounce)
+            .SetLoops(2, LoopType.Yoyo);
     }
     
     public void Land()
