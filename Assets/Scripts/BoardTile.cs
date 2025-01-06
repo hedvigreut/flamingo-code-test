@@ -9,18 +9,61 @@ public class BoardTile : MonoBehaviour
     private float pressDownScale = 0.2f;
     [SerializeField]
     private MeshRenderer tileRenderer;
-    public void Hop()
+    [SerializeField]
+    private Color pressColor = Color.white;
+
+    private MaterialPropertyBlock propertyBlock;
+    private Color originalColor;
+
+    private const string ShaderBaseColor = "_BaseColor";
+
+    private void Awake()
     {
+        // Use a material property block to swap colors of the material of an instance of the tile effectively
+        propertyBlock = new MaterialPropertyBlock();
+        tileRenderer.GetPropertyBlock(propertyBlock);
+        originalColor = propertyBlock.HasProperty(ShaderBaseColor) 
+            ? propertyBlock.GetColor(ShaderBaseColor) 
+            : tileRenderer.sharedMaterial.HasProperty(ShaderBaseColor) 
+                ? tileRenderer.sharedMaterial.GetColor(ShaderBaseColor) 
+                : Color.white;
+    }
+
+  public void Hop()
+    {
+        DOTween.To(
+                () => GetCurrentColor(),
+                x => SetTileColor(x),
+                pressColor,
+                pressDuration
+            )
+            .SetLoops(2, LoopType.Yoyo)
+            .SetEase(Ease.Linear);
+        
         float currentScaleY = tileRenderer.transform.localScale.y;
         float pressedScaleY = currentScaleY * pressDownScale;
+        
         tileRenderer.transform.localScale = new Vector3(tileRenderer.transform.localScale.x, pressedScaleY, tileRenderer.transform.localScale.z);
         tileRenderer.transform.DOScaleY(currentScaleY, pressDuration)
             .SetEase(Ease.OutBounce);
     }
 
+    private Color GetCurrentColor()
+    {
+        tileRenderer.GetPropertyBlock(propertyBlock);
+        return propertyBlock.HasProperty(ShaderBaseColor) 
+            ? propertyBlock.GetColor(ShaderBaseColor) 
+            : originalColor;
+    }
+
+    private void SetTileColor(Color color)
+    {
+        propertyBlock.SetColor(ShaderBaseColor, color);
+        tileRenderer.SetPropertyBlock(propertyBlock);
+    }
 
     public void Land()
-    {
-        Debug.Log("Land"+ gameObject.name);
+    { 
+        Debug.Log("Land " + gameObject.name);
     }
 }

@@ -4104,6 +4104,7 @@ MonoBehaviour:
   playerJumpSpeed: 0.25
   boardFactory: {fileID: 1697195308}
   tiles: []
+  raycaster: {fileID: 2099251577}
 --- !u!4 &1268212494
 Transform:
   m_ObjectHideFlags: 0
@@ -5633,7 +5634,7 @@ PrefabInstance:
     - target: {fileID: 1589785898346101236, guid: 3e7cb15866b2044c4821d261c3bfeeb2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.32
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1589785898346101236, guid: 3e7cb15866b2044c4821d261c3bfeeb2,
         type: 3}
@@ -6189,7 +6190,7 @@ PrefabInstance:
     - target: {fileID: 6368456256874804158, guid: 3d74121625596425285cf78b9855f929,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6368456256874804158, guid: 3d74121625596425285cf78b9855f929,
         type: 3}

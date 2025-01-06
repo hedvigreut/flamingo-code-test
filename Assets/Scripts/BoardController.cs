@@ -61,7 +61,6 @@ public class BoardController : MonoBehaviour
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
 
-            // Start the jump and use OnKill to execute after the tween finishes
             player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
                 .SetEase(Ease.OutQuad)
                 .OnKill(() =>
@@ -78,7 +77,6 @@ public class BoardController : MonoBehaviour
 
             yield return new WaitForSeconds(playerJumpSpeed);
         }
-
         raycaster.enabled = true;
     }
 

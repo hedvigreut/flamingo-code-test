@@ -340,4 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e0bfc152a844022ac5fa0275d35c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pressDuration: 0.25
+  pressDownScale: 0.2
   tileRenderer: {fileID: 5267236974447366494}
+  pressColor: {r: 1, g: 0.95851475, b: 0.8, a: 1}
