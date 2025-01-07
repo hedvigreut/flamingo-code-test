@@ -40,12 +40,6 @@ public class BoardTile : MonoBehaviour
         tileRenderer.GetPropertyBlock(_propertyBlock);
     }
 
-    private void Start()
-    {
-        ChangeTileColor(tileType);
-        Wobble();
-    }
-
     public TileType GetTileType()
     {
         return tileType;
@@ -124,7 +118,20 @@ public class BoardTile : MonoBehaviour
             .SetEase(Ease.OutBounce)
             .SetLoops(2, LoopType.Yoyo);
     }
-
+    
+    public void GrowAndWiggle()
+    {
+        Vector3 originalScale = tileRenderer.transform.localScale;
+        Vector3 targetScale = originalScale * 0.6f;
+        tileRenderer.transform.localScale = targetScale;
+        tileRenderer.transform.DOScale(originalScale, 0.3f)
+            .SetEase(Ease.OutQuad)
+            .OnKill(() =>
+            {
+                tileRenderer.transform.DOShakeRotation(0.2f, 10f, 10, 90);
+            });
+    }
+    
     public void Land()
     {
         HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);

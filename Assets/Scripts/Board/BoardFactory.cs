@@ -120,7 +120,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
         {
             var savedTileType = boardLayouts.boards[boardIndex].tileTypes[i];
             tiles[i].ChangeTileType(savedTileType);
-            tiles[i].Wobble();
+            tiles[i].GrowAndWiggle();
         }
 
         Debug.Log($"Loaded board: {boardLayouts.boards[boardIndex].boardName}");
