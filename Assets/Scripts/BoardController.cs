@@ -11,45 +11,41 @@ using Lofelt.NiceVibrations;
 
 public class BoardController : MonoBehaviour
 {
-    [Header("UI Elements")] 
-    [SerializeField]
+    [Header("UI Elements")] [SerializeField]
     private Button _travelButton;
-    [SerializeField] 
-    private TextMeshProUGUI stepsCounterText;
-    [SerializeField] 
-    private TextMeshProUGUI _travelPointsValueText;
-    
-    [Header("Game settings")]
-    [SerializeField] 
+
+    [SerializeField] private TextMeshProUGUI stepsCounterText;
+    [SerializeField] private TextMeshProUGUI _travelPointsValueText;
+
+    [Header("Game settings")] [SerializeField]
     private int travelPointRewardOnEmptyTile = 1000;
-    [SerializeField] 
-    private Player player;
+
+    [SerializeField] private Player player;
+
     [FormerlySerializedAs("jumpSpeed")] [SerializeField]
     private float playerJumpSpeed = 0.3f;
-    [SerializeField] 
-    private BoardFactory boardFactory;
-    
-    [SerializeField]
-    private GraphicRaycaster raycaster;
-    [FormerlySerializedAs("maxSteps")]
-    [SerializeField]
-    [Range(1,10)]
+
+    [SerializeField] private BoardFactory boardFactory;
+
+    [SerializeField] private GraphicRaycaster raycaster;
+
+    [FormerlySerializedAs("maxSteps")] [SerializeField] [Range(1, 10)]
     private int randomMaxSteps = 10;
-    [SerializeField]
-    private HapticClip rattleClip;
-    
+
+    [SerializeField] private HapticClip rattleClip;
+
     private BoardTile[] tiles;
     private int currentTileIndex;
     private int _previousTravelPoints;
     private const string FlagQuizSceneName = "FlagQuiz";
     private const string PictureQuizSceneName = "PictureQuiz";
-    
+
     private void Start()
     {
-        _previousTravelPoints = PlayerManager.Instance.GetTravelPoints();
+        _previousTravelPoints = PlayerDataManager.Instance.GetTravelPoints();
         _travelPointsValueText.text = _previousTravelPoints.ToString();
         tiles = boardFactory.GetTiles();
-        var savedTilePosition = PlayerManager.Instance.GetCurrentPosition();
+        var savedTilePosition = PlayerDataManager.Instance.GetCurrentPosition();
         currentTileIndex = savedTilePosition;
         SnapPlayerToTile(savedTilePosition);
     }
@@ -59,44 +55,41 @@ public class BoardController : MonoBehaviour
         MoveSteps(Random.Range(1, randomMaxSteps + 1));
         HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
     }
-    
+
     private void MoveSteps(int stepsToMove)
     {
         AnimateStepsCounter(stepsToMove);
     }
-    
+
     private void AnimateStepsCounter(int stepsToMove)
     {
         HapticController.Play(rattleClip);
         string targetText = stepsToMove.ToString("00");
         stepsCounterText.transform.DOScaleY(-1f, 0.1f)
-            .SetEase(Ease.Linear)  
+            .SetEase(Ease.Linear)
             .SetLoops(6, LoopType.Yoyo)
-            .OnUpdate(() => 
-            {
-                stepsCounterText.text = Random.Range(0, 100).ToString("00");
-            })
+            .OnUpdate(() => { stepsCounterText.text = Random.Range(0, 100).ToString("00"); })
             .OnKill(() =>
             {
                 stepsCounterText.text = targetText;
                 StartCoroutine(MovePlayerInSteps(currentTileIndex, stepsToMove));
             });
     }
-    
+
     private IEnumerator MovePlayerInSteps(int startIndex, int stepsToMove)
     {
         yield return new WaitForSeconds(0.2f);
         raycaster.enabled = false;
         int totalTiles = tiles.Length;
         float originalY = player.transform.position.y;
-    
+
         for (int i = 1; i <= stepsToMove; i++)
         {
             // Using modulo to set index if needed to loop around the board
             int nextTileIndex = (startIndex + i) % totalTiles;
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
-        
+
             player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
                 .SetEase(Ease.OutQuad)
                 .OnKill(() =>
@@ -114,11 +107,12 @@ public class BoardController : MonoBehaviour
                         tiles[nextTileIndex].Land();
                     }
                 });
-        
+
             yield return new WaitForSeconds(playerJumpSpeed);
             currentTileIndex = nextTileIndex;
-            PlayerManager.Instance.SetCurrentPosition(currentTileIndex);
+            PlayerDataManager.Instance.SetCurrentPosition(currentTileIndex);
         }
+
         // TODO: Replace once we have a transition animation to wait for it
         yield return new WaitForSeconds(0.5f);
         OnLanding();
@@ -127,9 +121,9 @@ public class BoardController : MonoBehaviour
 
     private void HopOverStartTile()
     {
-        var currentBoardIndex = PlayerManager.Instance.GetCurrentBoardIndex();
+        var currentBoardIndex = PlayerDataManager.Instance.GetCurrentBoardIndex();
         currentBoardIndex++;
-        PlayerManager.Instance.SetCurrentBoardIndex(currentBoardIndex);
+        PlayerDataManager.Instance.SetCurrentBoardIndex(currentBoardIndex);
         boardFactory.LoadBoardLayout(currentBoardIndex++);
     }
 
@@ -149,8 +143,8 @@ public class BoardController : MonoBehaviour
             case TileType.Default:
                 player.PlayCoinEffect();
                 player.PlayTravelPointsEffect(travelPointRewardOnEmptyTile);
-                PlayerManager.Instance.AddTravelPoints(travelPointRewardOnEmptyTile);
-                int currentTravelPoints = PlayerManager.Instance.GetTravelPoints();
+                PlayerDataManager.Instance.AddTravelPoints(travelPointRewardOnEmptyTile);
+                int currentTravelPoints = PlayerDataManager.Instance.GetTravelPoints();
                 AnimateTravelPointsChange(_previousTravelPoints, currentTravelPoints);
                 break;
             case TileType.Start:
@@ -172,7 +166,7 @@ public class BoardController : MonoBehaviour
     {
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
-    
+
     private void OnDisable()
     {
         SceneManager.sceneUnloaded -= OnSceneUnloaded;
@@ -184,17 +178,17 @@ public class BoardController : MonoBehaviour
     /// <param name="scene"></param>
     private void OnSceneUnloaded(Scene scene)
     {
-        int currentTravelPoints = PlayerManager.Instance.GetTravelPoints();
+        int currentTravelPoints = PlayerDataManager.Instance.GetTravelPoints();
         if (currentTravelPoints != _previousTravelPoints)
         {
             AnimateTravelPointsChange(_previousTravelPoints, currentTravelPoints);
             _previousTravelPoints = currentTravelPoints;
         }
     }
-    
+
     private void AnimateTravelPointsChange(int fromValue, int toValue)
     {
-        DOTween.To(() => (float)fromValue, 
+        DOTween.To(() => (float)fromValue,
                 x => _travelPointsValueText.text = Mathf.FloorToInt(x).ToString(),
                 toValue, 1f)
             .SetEase(Ease.Linear);
@@ -207,7 +201,7 @@ public class BoardController : MonoBehaviour
     {
         StartFlagQuiz();
     }
-    
+
     private async void StartFlagQuiz()
     {
         var loadOperation = SceneManager.LoadSceneAsync(FlagQuizSceneName, LoadSceneMode.Additive);
@@ -216,7 +210,7 @@ public class BoardController : MonoBehaviour
             await Task.Yield();
         }
     }
-    
+
     /// <summary>
     /// Debug button to start Text quiz
     /// </summary>

@@ -18,11 +18,11 @@ public class PictureQuizController : QuizController
     protected override void SetQuestionData()
     {
         base.SetQuestionData();
-        _currentQuestionIndex = PlayerManager.Instance.GetPictureQuestionIndex();
+        _currentQuestionIndex = PlayerDataManager.Instance.GetPictureQuestionIndex();
         if (_currentQuestionIndex >= _questions.Length || _questions.Length == 0)
         {
             _currentQuestionIndex = 0;
-            PlayerManager.Instance.ResetCurrentPictureQuestionIndex();
+            PlayerDataManager.Instance.ResetPictureQuestionIndex();
         }
         _currentQuestion = _questions[_currentQuestionIndex];
         _currentAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
@@ -67,7 +67,7 @@ public class PictureQuizController : QuizController
         SetTravelPoints(isCorrect: isCorrect);
         _currentQuestionIndex++;
         HapticPatterns.PlayPreset(isCorrect ? HapticPatterns.PresetType.Success : HapticPatterns.PresetType.Failure);
-        PlayerManager.Instance.SetCurrentPictureQuestionIndex(_currentQuestionIndex);
+        PlayerDataManager.Instance.SetPictureQuestionIndex(_currentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(textButton, isCorrect));
         }
     

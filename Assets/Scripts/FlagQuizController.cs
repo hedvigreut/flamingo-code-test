@@ -14,11 +14,11 @@ public class FlagQuizController : QuizController
     protected override void SetQuestionData()
     {
         base.SetQuestionData();
-        _currentQuestionIndex = PlayerManager.Instance.GetFlagQuestionIndex();
+        _currentQuestionIndex = PlayerDataManager.Instance.GetFlagQuestionIndex();
         if (_currentQuestionIndex >= _questions.Length || _questions.Length == 0)
         {
             _currentQuestionIndex = 0;
-            PlayerManager.Instance.ResetCurrentFlagQuestionIndex();
+            PlayerDataManager.Instance.ResetFlagQuestionIndex();
         }
         _currentQuestion = _questions[_currentQuestionIndex];
         _currentAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
@@ -69,7 +69,7 @@ public class FlagQuizController : QuizController
         flagButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
         _currentQuestionIndex++;
-        PlayerManager.Instance.SetCurrentFlagQuestionIndex(_currentQuestionIndex);
+        PlayerDataManager.Instance.SetFlagQuestionIndex(_currentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
         HapticPatterns.PlayPreset(isCorrect ? HapticPatterns.PresetType.Success : HapticPatterns.PresetType.Failure);
     }

@@ -42,7 +42,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     {
         var tileTypes = (TileType[])Enum.GetValues(typeof(TileType));
         _allQuizTileTypes = tileTypes.Where(t => t != TileType.Start).ToArray();
-        LoadBoardLayout(PlayerManager.Instance.GetCurrentBoardIndex());
+        LoadBoardLayout(PlayerDataManager.Instance.GetCurrentBoardIndex());
     }
     
     /// <summary>
@@ -115,7 +115,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
         if (boardIndex >= boardLayouts.boards.Count)
         {
             Debug.LogWarning("Board Index is out of range, loading first board");
-            PlayerManager.Instance.SetCurrentBoardIndex(0);
+            PlayerDataManager.Instance.SetCurrentBoardIndex(0);
             boardIndex = 0;
         }
         for (int i = 0; i < tiles.Length; i++)

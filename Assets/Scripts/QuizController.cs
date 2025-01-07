@@ -146,7 +146,7 @@ public abstract class QuizController : MonoBehaviour
 
     protected void SetTravelPoints(bool isCorrect)
     {
-        PlayerManager.Instance.AddTravelPoints(isCorrect ? _correctReward : _incorrectReward);
+        PlayerDataManager.Instance.AddTravelPoints(isCorrect ? _correctReward : _incorrectReward);
     }
     
     protected Sprite GetSpriteByID(string imageID, bool customID = false)
