@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Quizzes
@@ -32,6 +33,8 @@ namespace Quizzes
 
         [Header("Animation:")] [SerializeField]
         protected Animator _rewardsAnimator;
+        [SerializeField]
+        private float maxNumberOfSecondsToWaitForTap = 5f;
 
         private const string animatorOpenState = "Open";
         private const string animatorCloseState = "Close";
@@ -107,18 +110,18 @@ namespace Quizzes
 
         protected IEnumerator CheckForTap()
         {
-            while (!Input.GetMouseButtonDown(0))
+            float timer = 0f;
+            while (timer < maxNumberOfSecondsToWaitForTap)
             {
+                if (Input.GetMouseButtonDown(0))
+                    break;
+
+                timer += Time.deltaTime;
                 yield return null;
             }
-
             _rewardsAnimator.SetBool(animatorOpenState, false);
-
             while (!IsAnimatorDone(_rewardsAnimator, animatorCloseState))
-            {
                 yield return null;
-            }
-
             UnloadScene();
         }
 
