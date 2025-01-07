@@ -323,8 +323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9169b7404d89d425ab7126b8fdcf9433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 8101398073557442499}
+  coinParticleSystem: {fileID: 8101398073557442499}
   travelPointText: {fileID: 1025970218355800771}
+  coinClip: {fileID: -8404250095460277587, guid: df6ba66827ad642daa95fb9bc020da9f,
+    type: 3}
 --- !u!1001 &2305958227572104538
 PrefabInstance:
   m_ObjectHideFlags: 0

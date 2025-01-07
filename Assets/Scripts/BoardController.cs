@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using Lofelt.NiceVibrations;
 
 public class BoardController : MonoBehaviour
 {
@@ -31,10 +32,11 @@ public class BoardController : MonoBehaviour
     [SerializeField]
     private GraphicRaycaster raycaster;
     [FormerlySerializedAs("maxSteps")]
-    [SerializeField] 
+    [SerializeField]
     [Range(1,10)]
     private int randomMaxSteps = 10;
-    [Header("Debug options")]
+    [SerializeField]
+    private HapticClip rattleClip;
     
     private BoardTile[] tiles;
     private int currentTileIndex;
@@ -55,6 +57,7 @@ public class BoardController : MonoBehaviour
     public void OnTravelButtonPressed()
     {
         MoveSteps(Random.Range(1, randomMaxSteps + 1));
+        HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
     }
     
     private void MoveSteps(int stepsToMove)
@@ -64,10 +67,11 @@ public class BoardController : MonoBehaviour
     
     private void AnimateStepsCounter(int stepsToMove)
     {
+        HapticController.Play(rattleClip);
         string targetText = stepsToMove.ToString("00");
         stepsCounterText.transform.DOScaleY(-1f, 0.1f)
             .SetEase(Ease.Linear)  
-            .SetLoops(10, LoopType.Yoyo)
+            .SetLoops(6, LoopType.Yoyo)
             .OnUpdate(() => 
             {
                 stepsCounterText.text = Random.Range(0, 100).ToString("00");
@@ -146,6 +150,8 @@ public class BoardController : MonoBehaviour
                 player.PlayCoinEffect();
                 player.PlayTravelPointsEffect(travelPointRewardOnEmptyTile);
                 PlayerManager.Instance.AddTravelPoints(travelPointRewardOnEmptyTile);
+                int currentTravelPoints = PlayerManager.Instance.GetTravelPoints();
+                AnimateTravelPointsChange(_previousTravelPoints, currentTravelPoints);
                 break;
             case TileType.Start:
                 HopOverStartTile();

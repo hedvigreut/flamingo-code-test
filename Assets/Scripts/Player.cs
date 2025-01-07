@@ -1,16 +1,20 @@
 using DG.Tweening;
+using Lofelt.NiceVibrations;
 using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private ParticleSystem particleSystem;
+    private ParticleSystem coinParticleSystem;
     [SerializeField] 
     private TMP_Text travelPointText;
+    [SerializeField]
+    private HapticClip coinClip;
     public void PlayCoinEffect()
     {
-        particleSystem.Play();
+        coinParticleSystem.Play();
+        HapticController.Play(coinClip);
     }
     public void PlayTravelPointsEffect(int coinValue)
     {
