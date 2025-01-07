@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -12,7 +13,12 @@ public class SplashController : MonoBehaviour
     private TextMeshProUGUI progressBarText;
     [SerializeField] 
     private float fakeLoadingScalar = 20f;
-    
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 90;
+    }
+
     private void Start()
     {
         StartCoroutine(LoadSceneRoutine("Board"));
