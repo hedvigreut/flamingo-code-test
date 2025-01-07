@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using Lofelt.NiceVibrations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -70,6 +71,7 @@ public class FlagQuizController : QuizController
         _currentQuestionIndex++;
         PlayerManager.Instance.SetCurrentFlagQuestionIndex(_currentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
+        HapticPatterns.PlayPreset(isCorrect ? HapticPatterns.PresetType.Success : HapticPatterns.PresetType.Failure);
     }
 
     private IEnumerator WaitForButtonAnimation(FlagButton flagButton, bool correct)

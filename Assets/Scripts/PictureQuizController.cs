@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using Lofelt.NiceVibrations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -65,6 +66,7 @@ public class PictureQuizController : QuizController
         textButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
         _currentQuestionIndex++;
+        HapticPatterns.PlayPreset(isCorrect ? HapticPatterns.PresetType.Success : HapticPatterns.PresetType.Failure);
         PlayerManager.Instance.SetCurrentPictureQuestionIndex(_currentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(textButton, isCorrect));
         }

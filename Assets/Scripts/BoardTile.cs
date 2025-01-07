@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Lofelt.NiceVibrations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -91,6 +92,7 @@ public class BoardTile : MonoBehaviour
     }
     public void Hop()
     {
+        HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
       _originalColor = _propertyBlock.HasProperty(ShaderBaseColor) 
           ? _propertyBlock.GetColor(ShaderBaseColor) 
           : tileRenderer.sharedMaterial.HasProperty(ShaderBaseColor) 
@@ -129,7 +131,7 @@ public class BoardTile : MonoBehaviour
     
     public void Land()
     {
-        // Debug.Log($"Landed on {gameObject.name} with type {tileType})");
+        HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
         TileEffectAnimation();
         switch (tileType)
         {
