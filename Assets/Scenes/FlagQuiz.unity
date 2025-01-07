@@ -272,19 +272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adeb60c0df5d64a93bf778c25bc02c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionText: {fileID: 5284184137343310132}
-  rewardUI: {fileID: 9163141026939843748}
-  correctAnswerImage: {fileID: 9163141026939843746}
-  correctAnswerText: {fileID: 9163141026939843745}
-  answerMessage: {fileID: 802408450993035934}
-  rewardValue: {fileID: 2668870554788163388}
-  raycaster: {fileID: 2099251577}
-  _rewardsAnimator: {fileID: 9163141026939843747}
-  _totalTime: 15
-  _currentTimeText: {fileID: 3669193159697998880}
-  _progressSlider: {fileID: 1861207425}
-  _correctReward: 5000
-  _incorrectReward: 2000
+  _quizData: {fileID: 4900000, guid: 4482a386492e14526b953f542090ddda, type: 3}
+  maximumQuizAnswerTime: 15
+  gameSettings: {fileID: 11400000, guid: 135895258e4b8452ab78ceb895370a7a, type: 2}
+  quizReader: {fileID: 103924046}
   _quizVisuals:
   - sprite: {fileID: 21300000, guid: aa7afeb4cdb604109a8aa4c8e19c5207, type: 3}
     ImageID: ca
@@ -298,8 +289,16 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: f75ef7a79354a4bca9e8b6f856f82a8d, type: 3}
     ImageID: us
     name: United States
-  _quizData: {fileID: 4900000, guid: 4482a386492e14526b953f542090ddda, type: 3}
-  quizReader: {fileID: 103924046}
+  questionText: {fileID: 5284184137343310132}
+  rewardUI: {fileID: 9163141026939843748}
+  correctAnswerImage: {fileID: 9163141026939843746}
+  correctAnswerText: {fileID: 9163141026939843745}
+  answerMessage: {fileID: 802408450993035934}
+  rewardValue: {fileID: 2668870554788163388}
+  raycaster: {fileID: 2099251577}
+  _currentTimeText: {fileID: 3669193159697998880}
+  _progressSlider: {fileID: 1861207425}
+  _rewardsAnimator: {fileID: 9163141026939843747}
   _flagButtons:
   - {fileID: 1888658385}
   - {fileID: 1505672714}

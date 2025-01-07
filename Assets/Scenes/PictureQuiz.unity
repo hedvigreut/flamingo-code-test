@@ -355,19 +355,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bedc6a75f7e9c459e8818f37dd447d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionText: {fileID: 1121135792}
-  rewardUI: {fileID: 5634928}
-  correctAnswerImage: {fileID: 5634926}
-  correctAnswerText: {fileID: 5634930}
-  answerMessage: {fileID: 5634927}
-  rewardValue: {fileID: 5634929}
-  raycaster: {fileID: 2099251577}
-  _rewardsAnimator: {fileID: 1056598203}
-  _totalTime: 15
-  _currentTimeText: {fileID: 1128908109}
-  _progressSlider: {fileID: 1128908110}
-  _correctReward: 5000
-  _incorrectReward: 2000
+  _quizData: {fileID: 4900000, guid: 516c2dd33b1fd4814925b0e3aea0c8b0, type: 3}
+  maximumQuizAnswerTime: 15
+  gameSettings: {fileID: 11400000, guid: 135895258e4b8452ab78ceb895370a7a, type: 2}
+  quizReader: {fileID: 775689284}
   _quizVisuals:
   - sprite: {fileID: 21300000, guid: a20353a09c0104257b308f5ae55c9f66, type: 3}
     ImageID: be
@@ -381,8 +372,16 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: 727f311fbf1cf4b1a857089edc2188d2, type: 3}
     ImageID: am
     name: Amsterdam
-  _quizData: {fileID: 4900000, guid: 516c2dd33b1fd4814925b0e3aea0c8b0, type: 3}
-  quizReader: {fileID: 775689284}
+  questionText: {fileID: 1121135792}
+  rewardUI: {fileID: 5634928}
+  correctAnswerImage: {fileID: 5634926}
+  correctAnswerText: {fileID: 5634930}
+  answerMessage: {fileID: 5634927}
+  rewardValue: {fileID: 5634929}
+  raycaster: {fileID: 2099251577}
+  _currentTimeText: {fileID: 1128908109}
+  _progressSlider: {fileID: 1128908110}
+  _rewardsAnimator: {fileID: 1056598203}
   optionButtons:
   - {fileID: 1121135796}
   - {fileID: 1121135795}
