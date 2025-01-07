@@ -4,14 +4,17 @@ public class PlayerDataManager
 {
     private static PlayerDataManager _instance;
     public static PlayerDataManager Instance => _instance ??= new PlayerDataManager();
-    private PlayerDataManager() { }
-    
+
+    private PlayerDataManager()
+    {
+    }
+
     private const string TravelPointsKey = "Travel Points";
     private const string CurrentFlagQuestionIndexKey = "FlagQuestionIndex";
     private const string CurrentPictureQuestionIndexKey = "PictureQuestionIndex";
     private const string CurrentBoardKey = "CurrentBoard";
     private const string CurrentPositionKey = "CurrentPosition";
-    
+
     public int GetTravelPoints()
     {
         return PlayerPrefs.GetInt(TravelPointsKey, 0);

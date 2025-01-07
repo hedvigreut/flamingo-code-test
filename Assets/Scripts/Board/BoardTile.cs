@@ -2,7 +2,6 @@ using System;
 using DG.Tweening;
 using Lofelt.NiceVibrations;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public enum TileType
 {
@@ -14,29 +13,22 @@ public enum TileType
 
 public class BoardTile : MonoBehaviour
 {
-    [SerializeField]
-    private MeshRenderer tileRenderer;
-    [SerializeField] 
-    private TileType tileType;
-    
-    [Header("Color settings")]
-    [SerializeField] 
+    [SerializeField] private MeshRenderer tileRenderer;
+    [SerializeField] private TileType tileType;
+
+    [Header("Color settings")] [SerializeField]
     private Color defaultTileColor;
-    [SerializeField] 
-    private Color startColor;
-    [SerializeField] 
-    private Color flagTileColor;
-    [SerializeField] 
-    private Color pictureTileColor;
-    [SerializeField]
-    private float pressLightenFactor;
-    
-    [Header("Animation settings")]
-    [SerializeField] 
+
+    [SerializeField] private Color startColor;
+    [SerializeField] private Color flagTileColor;
+    [SerializeField] private Color pictureTileColor;
+    [SerializeField] private float pressLightenFactor;
+
+    [Header("Animation settings")] [SerializeField]
     private float pressDuration = 0.25f;
-    [SerializeField]
-    private float pressDownScale = 0.2f;
-    
+
+    [SerializeField] private float pressDownScale = 0.2f;
+
     private MaterialPropertyBlock _propertyBlock;
     private Color _originalColor;
     private const string ShaderBaseColor = "_BaseColor";
@@ -68,6 +60,7 @@ public class BoardTile : MonoBehaviour
         tileType = newTileType;
         ChangeTileColor(newTileType);
     }
+
     private void ChangeTileColor(TileType newTileType)
     {
         switch (newTileType)
@@ -88,19 +81,21 @@ public class BoardTile : MonoBehaviour
                 Debug.LogWarning("Unknown tile type");
                 break;
         }
+
         tileRenderer.SetPropertyBlock(_propertyBlock);
     }
+
     public void Hop()
     {
         HapticPatterns.PlayPreset(HapticPatterns.PresetType.LightImpact);
-      _originalColor = _propertyBlock.HasProperty(ShaderBaseColor) 
-          ? _propertyBlock.GetColor(ShaderBaseColor) 
-          : tileRenderer.sharedMaterial.HasProperty(ShaderBaseColor) 
-              ? tileRenderer.sharedMaterial.GetColor(ShaderBaseColor) 
-              : Color.white;
-      TileEffectAnimation();
+        _originalColor = _propertyBlock.HasProperty(ShaderBaseColor)
+            ? _propertyBlock.GetColor(ShaderBaseColor)
+            : tileRenderer.sharedMaterial.HasProperty(ShaderBaseColor)
+                ? tileRenderer.sharedMaterial.GetColor(ShaderBaseColor)
+                : Color.white;
+        TileEffectAnimation();
     }
-    
+
     private void TileEffectAnimation()
     {
         DOTween.To(
@@ -111,15 +106,16 @@ public class BoardTile : MonoBehaviour
             )
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.Linear);
-        
+
         float currentScaleY = tileRenderer.transform.localScale.y;
         float pressedScaleY = currentScaleY * pressDownScale;
-        
-        tileRenderer.transform.localScale = new Vector3(tileRenderer.transform.localScale.x, pressedScaleY, tileRenderer.transform.localScale.z);
+
+        tileRenderer.transform.localScale = new Vector3(tileRenderer.transform.localScale.x, pressedScaleY,
+            tileRenderer.transform.localScale.z);
         tileRenderer.transform.DOScaleY(currentScaleY, pressDuration)
             .SetEase(Ease.OutBounce);
     }
-    
+
     public void Wobble()
     {
         float currentScaleY = tileRenderer.transform.localScale.y;
@@ -128,7 +124,7 @@ public class BoardTile : MonoBehaviour
             .SetEase(Ease.OutBounce)
             .SetLoops(2, LoopType.Yoyo);
     }
-    
+
     public void Land()
     {
         HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
@@ -147,12 +143,12 @@ public class BoardTile : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
-    
+
     private Color GetCurrentColor()
     {
         tileRenderer.GetPropertyBlock(_propertyBlock);
-        return _propertyBlock.HasProperty(ShaderBaseColor) 
-            ? _propertyBlock.GetColor(ShaderBaseColor) 
+        return _propertyBlock.HasProperty(ShaderBaseColor)
+            ? _propertyBlock.GetColor(ShaderBaseColor)
             : _originalColor;
     }
 
@@ -161,7 +157,7 @@ public class BoardTile : MonoBehaviour
         _propertyBlock.SetColor(ShaderBaseColor, color);
         tileRenderer.SetPropertyBlock(_propertyBlock);
     }
-    
+
     private Color LightenColor(Color color, float factor)
     {
         return Color.Lerp(color, Color.white, factor);

@@ -11,24 +11,24 @@ using Lofelt.NiceVibrations;
 public class BoardController : MonoBehaviour
 {
     [Header("UI Elements")] [SerializeField]
-    private Button _travelButton;
+    private Button travelButton;
 
     [SerializeField] private TextMeshProUGUI stepsCounterText;
     [SerializeField] private TextMeshProUGUI _travelPointsValueText;
 
-    [Header("Game settings")]
-    [SerializeField] private GameSettings gameSettings;
+    [Header("Game settings")] [SerializeField]
+    private GameSettings gameSettings;
 
     [SerializeField] private Player player;
 
     [SerializeField] private BoardFactory boardFactory;
 
     [SerializeField] private GraphicRaycaster raycaster;
-    
+
     [SerializeField] private HapticClip rattleClip;
 
     private BoardTile[] tiles;
-    private int currentTileIndex;
+    private int _currentTileIndex;
     private int _previousTravelPoints;
     private const string FlagQuizSceneName = "FlagQuiz";
     private const string PictureQuizSceneName = "PictureQuiz";
@@ -39,7 +39,7 @@ public class BoardController : MonoBehaviour
         _travelPointsValueText.text = _previousTravelPoints.ToString();
         tiles = boardFactory.GetTiles();
         var savedTilePosition = PlayerDataManager.Instance.GetCurrentPosition();
-        currentTileIndex = savedTilePosition;
+        _currentTileIndex = savedTilePosition;
         SnapPlayerToTile(savedTilePosition);
     }
 
@@ -65,7 +65,7 @@ public class BoardController : MonoBehaviour
             .OnKill(() =>
             {
                 stepsCounterText.text = targetText;
-                StartCoroutine(MovePlayerInSteps(currentTileIndex, stepsToMove));
+                StartCoroutine(MovePlayerInSteps(_currentTileIndex, stepsToMove));
             });
     }
 
@@ -83,7 +83,8 @@ public class BoardController : MonoBehaviour
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
 
-            player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: gameSettings.playerJumpSpeed)
+            player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1,
+                    duration: gameSettings.playerJumpSpeed)
                 .SetEase(Ease.OutQuad)
                 .OnKill(() =>
                 {
@@ -102,8 +103,8 @@ public class BoardController : MonoBehaviour
                 });
 
             yield return new WaitForSeconds(gameSettings.playerJumpSpeed);
-            currentTileIndex = nextTileIndex;
-            PlayerDataManager.Instance.SetCurrentPosition(currentTileIndex);
+            _currentTileIndex = nextTileIndex;
+            PlayerDataManager.Instance.SetCurrentPosition(_currentTileIndex);
         }
 
         // TODO: Replace once we have a transition animation to wait for it
@@ -130,7 +131,7 @@ public class BoardController : MonoBehaviour
 
     private void OnLanding()
     {
-        TileType landedTileType = tiles[currentTileIndex].GetTileType();
+        TileType landedTileType = tiles[_currentTileIndex].GetTileType();
         switch (landedTileType)
         {
             case TileType.Default:

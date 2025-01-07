@@ -299,7 +299,7 @@ MonoBehaviour:
   _currentTimeText: {fileID: 3669193159697998880}
   _progressSlider: {fileID: 1861207425}
   _rewardsAnimator: {fileID: 9163141026939843747}
-  _flagButtons:
+  flagButtons:
   - {fileID: 1888658385}
   - {fileID: 1505672714}
   - {fileID: 1349431012}

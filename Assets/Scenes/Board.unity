@@ -2183,18 +2183,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837667907}
   m_CullTransparentMesh: 1
---- !u!114 &871975786 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5622613569308049006, guid: fce71c626b1eb4a66b114b74c44ba3f2,
-    type: 3}
-  m_PrefabInstance: {fileID: 5891676651139796691}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &877363685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3425,7 +3413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6542602aa2aa04c508b7f4e86b102b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelButton: {fileID: 871975786}
+  travelButton: {fileID: 0}
   stepsCounterText: {fileID: 460721195}
   _travelPointsValueText: {fileID: 158064481}
   gameSettings: {fileID: 11400000, guid: 135895258e4b8452ab78ceb895370a7a, type: 2}

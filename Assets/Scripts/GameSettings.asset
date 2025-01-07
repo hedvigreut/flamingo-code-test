@@ -14,13 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerJumpSpeed: 0.3
   randomMaxSteps: 10
-  flagquizDataSimple: {fileID: 4900000, guid: 66588a69ef43e4ed288f156ecfd7e532, type: 3}
-  flagquizDataExtended: {fileID: 4900000, guid: 4482a386492e14526b953f542090ddda,
-    type: 3}
-  picturequizDataSimple: {fileID: 4900000, guid: 952f70ada48f2445494217015362263b,
-    type: 3}
-  picturequizDataExtended: {fileID: 4900000, guid: 516c2dd33b1fd4814925b0e3aea0c8b0,
-    type: 3}
   correctTravelPointReward: 4000
   incorrectTravelPointReward: 1000
   travelPointRewardOnEmptyTile: 1000
