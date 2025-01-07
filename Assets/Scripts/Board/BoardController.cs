@@ -23,7 +23,6 @@ public class BoardController : MonoBehaviour
 
     [SerializeField] private BoardFactory boardFactory;
 
-    [SerializeField] private GraphicRaycaster raycaster;
 
     [SerializeField] private HapticClip rattleClip;
 
@@ -51,7 +50,7 @@ public class BoardController : MonoBehaviour
 
     private void MoveSteps(int stepsToMove)
     {
-        raycaster.enabled = false;
+        travelButton.enabled = false;
         AnimateStepsCounter(stepsToMove);
     }
 
@@ -110,7 +109,7 @@ public class BoardController : MonoBehaviour
         // TODO: Replace once we have a transition animation to wait for it
         yield return new WaitForSeconds(0.5f);
         OnLanding();
-        raycaster.enabled = true;
+        travelButton.enabled = true;
     }
 
     private void HopOverStartTile()

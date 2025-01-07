@@ -123,7 +123,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
             tiles[i].GrowAndWiggle();
         }
 
-        Debug.Log($"Loaded board: {boardLayouts.boards[boardIndex].boardName}");
+        Debug.Log($"Loaded a new board {boardLayouts.boards[boardIndex].boardName}");
     }
 }
 

@@ -3419,7 +3419,6 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: 135895258e4b8452ab78ceb895370a7a, type: 2}
   player: {fileID: 2018558642}
   boardFactory: {fileID: 1697195308}
-  raycaster: {fileID: 2099251577}
   rattleClip: {fileID: -8404250095460277587, guid: c2cf96fe302d24d87aec931e86940617,
     type: 3}
 --- !u!4 &1268212494
@@ -4782,7 +4781,7 @@ PrefabInstance:
     - target: {fileID: 1589785898346101236, guid: 3e7cb15866b2044c4821d261c3bfeeb2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1589785898346101236, guid: 3e7cb15866b2044c4821d261c3bfeeb2,
         type: 3}
