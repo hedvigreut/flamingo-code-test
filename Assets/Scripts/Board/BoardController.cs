@@ -51,6 +51,7 @@ public class BoardController : MonoBehaviour
 
     private void MoveSteps(int stepsToMove)
     {
+        raycaster.enabled = false;
         AnimateStepsCounter(stepsToMove);
     }
 
@@ -72,7 +73,6 @@ public class BoardController : MonoBehaviour
     private IEnumerator MovePlayerInSteps(int startIndex, int stepsToMove)
     {
         yield return new WaitForSeconds(0.2f);
-        raycaster.enabled = false;
         int totalTiles = tiles.Length;
         float originalY = player.transform.position.y;
 
