@@ -1,9 +1,10 @@
-using UnityEngine;
-
-public interface IAnswerButton
+namespace Buttons
 {
-    public void ChangeColor(bool isCorrect){}
+    public interface IAnswerButton
+    {
+        public void ChangeColor(bool isCorrect){}
 
-    public bool IsAnimatorAnimationComplete();
+        public bool IsAnimatorAnimationComplete();
     
+    }
 }
