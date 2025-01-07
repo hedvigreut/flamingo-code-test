@@ -38,9 +38,9 @@ public abstract class QuizController : MonoBehaviour
     
     [Header("Reward settings:")]
     [SerializeField] 
-    private int _correctReward = 5000;    
+    private int _correctReward = 4000;    
     [SerializeField] 
-    private int _incorrectReward = 2000; 
+    private int _incorrectReward = 1000; 
     
     [FormerlySerializedAs("_flagSpritesToIds")]
     [Header("Button settings:")]
