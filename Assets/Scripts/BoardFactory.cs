@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
 using UnityEngine;
 using Random = UnityEngine.Random;
 #if UNITY_EDITOR
@@ -42,7 +41,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     public void Start()
     {
         var tileTypes = (TileType[])Enum.GetValues(typeof(TileType));
-        _allQuizTileTypes = tileTypes.Except(TileType.Start).ToArray();
+        _allQuizTileTypes = tileTypes.Where(t => t != TileType.Start).ToArray();
         LoadBoardLayout(PlayerManager.Instance.GetCurrentBoardIndex());
     }
     
@@ -79,7 +78,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     
     private TileType GetRandomNonDefaultTileType()
     {
-        TileType[] nonDefaultTileTypes = _allQuizTileTypes.Except(defaultTileType).ToArray();
+        TileType[] nonDefaultTileTypes = _allQuizTileTypes.Where(t => t != defaultTileType).ToArray();
         TileType newNonDefaultTile = nonDefaultTileTypes[Random.Range(0, nonDefaultTileTypes.Length)];
         return newNonDefaultTile;
     }
@@ -87,7 +86,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
     public void Randomize()
     {
         var tileTypes = (TileType[])Enum.GetValues(typeof(TileType));
-        _allQuizTileTypes = tileTypes.Except(TileType.Start).ToArray();
+        _allQuizTileTypes = tileTypes.Where(t => t != TileType.Start).ToArray();
         AssignTileTypes(); 
     }
     
@@ -106,7 +105,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
 
     public void LoadBoardLayout(int boardIndex)
     {
-        if (boardLayouts.boards.IsEmpty())
+        if (boardLayouts.boards.Any())
         {
             Randomize();
             Save();

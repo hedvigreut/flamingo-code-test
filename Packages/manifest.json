@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.svermeulen.extenject": "file:/Users/hedvigreutersward/Downloads/Zenject-master/UnityProject/Assets/Plugins/Zenject",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.device-simulator.devices": "1.0.0",
