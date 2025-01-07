@@ -102,7 +102,7 @@ public class BoardFactory : MonoBehaviour, IBoardFactory
 
     public void LoadBoardLayout(int boardIndex)
     {
-        if (boardLayouts.boards.Any())
+        if (!boardLayouts.boards.Any())
         {
             Randomize();
             Save();
