@@ -3425,7 +3425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6542602aa2aa04c508b7f4e86b102b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _travelButton: {fileID: 871975786}
+  travelButton: {fileID: 871975786}
   stepsCounterText: {fileID: 460721195}
   _travelPointsValueText: {fileID: 158064481}
   gameSettings: {fileID: 11400000, guid: 135895258e4b8452ab78ceb895370a7a, type: 2}
