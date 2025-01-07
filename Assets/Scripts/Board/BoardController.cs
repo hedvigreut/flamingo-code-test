@@ -123,7 +123,7 @@ public class BoardController : MonoBehaviour
 
     private void SnapPlayerToTile(int targetTileIndex)
     {
-        float originalY = transform.position.y;
+        float originalY = player.transform.position.y;
         Vector3 targetPosition = tiles[targetTileIndex].transform.position;
         targetPosition.y = originalY;
         player.transform.position = targetPosition;
