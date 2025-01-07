@@ -268,8 +268,7 @@ MonoBehaviour:
   outline: {fileID: 5608375573008950826}
   correctColor: {r: 0.5921569, g: 0.9098039, b: 0.31764707, a: 1}
   incorrectColor: {r: 0.9137255, g: 0.27058825, b: 0.3764706, a: 1}
-  _animator: {fileID: 4755314064743907786}
-  _lastAnimationState: 2
+  animator: {fileID: 4755314064743907786}
 --- !u!114 &6069710281629451692
 MonoBehaviour:
   m_ObjectHideFlags: 0

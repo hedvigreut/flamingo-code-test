@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class FlagButton : MonoBehaviour, IAnswerButton
@@ -12,7 +13,7 @@ public class FlagButton : MonoBehaviour, IAnswerButton
     [SerializeField]
     private Color incorrectColor;
     [SerializeField] 
-    private Animator _animator;
+    private Animator animator;
     private const string FinalAnimationState = "Pressed";
 
     public void ChangeColor(bool isCorrect)
@@ -27,7 +28,7 @@ public class FlagButton : MonoBehaviour, IAnswerButton
     
     public bool IsAnimatorAnimationComplete()
     {
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.IsName(FinalAnimationState) && stateInfo.normalizedTime >= 1f;
     }
 }
