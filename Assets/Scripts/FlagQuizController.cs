@@ -14,15 +14,14 @@ public class FlagQuizController : QuizController
     protected override void SetQuestionData()
     {
         base.SetQuestionData();
-        _currentQuestionIndex = PlayerDataManager.Instance.GetFlagQuestionIndex();
-        if (_currentQuestionIndex >= _questions.Length || _questions.Length == 0)
+        CurrentQuestionIndex = PlayerDataManager.Instance.GetFlagQuestionIndex();
+        if (CurrentQuestionIndex >= Questions.Length || Questions.Length == 0)
         {
-            _currentQuestionIndex = 0;
+            CurrentQuestionIndex = 0;
             PlayerDataManager.Instance.ResetFlagQuestionIndex();
         }
-        _currentQuestion = _questions[_currentQuestionIndex];
-        _currentAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
-        if (_currentQuestion != null)
+        CurrentQuestion = Questions[CurrentQuestionIndex];
+        if (CurrentQuestion != null)
         {
             SetQuestionVisuals();
         }
@@ -37,14 +36,14 @@ public class FlagQuizController : QuizController
     /// </summary>
     private void SetQuestionVisuals()
     {
-        questionText.text = _currentQuestion.Question;
-        Answer correctAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
+        questionText.text = CurrentQuestion.Question;
+        Answer correctAnswer = CurrentQuestion.Answers[CurrentQuestion.CorrectAnswerIndex];
         Sprite correctPicture = GetSpriteByID(correctAnswer.ImageID, false);
         correctAnswerImage.sprite = correctPicture;
-        correctAnswerText.text = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex].Text;
-        for (int i = 0; i < _currentQuestion.Answers.Length && i < _flagButtons.Length; i++)
+        correctAnswerText.text = CurrentQuestion.Answers[CurrentQuestion.CorrectAnswerIndex].Text;
+        for (int i = 0; i < CurrentQuestion.Answers.Length && i < _flagButtons.Length; i++)
         {
-            string imageID = _currentQuestion.Answers[i].ImageID;
+            string imageID = CurrentQuestion.Answers[i].ImageID;
             Sprite flagSprite = GetSpriteByID(imageID);
             if (flagSprite != null)
             {
@@ -65,11 +64,11 @@ public class FlagQuizController : QuizController
     public void OnFlagButtonPressed(int index)
     {
         FlagButton flagButton = _flagButtons[index];
-        bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
+        bool isCorrect = index == CurrentQuestion.CorrectAnswerIndex;
         flagButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
-        _currentQuestionIndex++;
-        PlayerDataManager.Instance.SetFlagQuestionIndex(_currentQuestionIndex);
+        CurrentQuestionIndex++;
+        PlayerDataManager.Instance.SetFlagQuestionIndex(CurrentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(flagButton, isCorrect));
         HapticPatterns.PlayPreset(isCorrect ? HapticPatterns.PresetType.Success : HapticPatterns.PresetType.Failure);
     }

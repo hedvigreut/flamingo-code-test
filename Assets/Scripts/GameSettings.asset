@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9a598a150b14981905a41ce4861f2c, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  playerJumpSpeed: 0.3
+  randomMaxSteps: 10
+  flagquizDataSimple: {fileID: 4900000, guid: 66588a69ef43e4ed288f156ecfd7e532, type: 3}
+  flagquizDataExtended: {fileID: 4900000, guid: 4482a386492e14526b953f542090ddda,
+    type: 3}
+  picturequizDataSimple: {fileID: 4900000, guid: 952f70ada48f2445494217015362263b,
+    type: 3}
+  picturequizDataExtended: {fileID: 4900000, guid: 516c2dd33b1fd4814925b0e3aea0c8b0,
+    type: 3}
+  correctTravelPointReward: 4000
+  incorrectTravelPointReward: 1000
+  travelPointRewardOnEmptyTile: 1000

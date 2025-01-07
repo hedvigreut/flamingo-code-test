@@ -7,12 +7,27 @@ using DG.Tweening;
 
 public abstract class QuizController : MonoBehaviour
 {
+    [Header("Quiz data:")]
+    [SerializeField] 
+    protected TextAsset _quizData;
+    [SerializeField] 
+    protected float maximumQuizAnswerTime = 15f;
+    [SerializeField] 
+    protected GameSettings gameSettings;
+    [SerializeField] 
+    [Space(10)]
+    protected QuizReader quizReader;
+    [Header("Button settings:")]
+    [SerializeField] 
+    private QuizVisualsData[] _quizVisuals;
+
     [Header("UI Elements")]
     [SerializeField]
     protected TextMeshProUGUI questionText;
     [SerializeField] 
     private GameObject rewardUI;
-    [SerializeField] protected Image correctAnswerImage;
+    [SerializeField] 
+    protected Image correctAnswerImage;
     [SerializeField] 
     protected TextMeshProUGUI correctAnswerText;
     [SerializeField] 
@@ -21,50 +36,31 @@ public abstract class QuizController : MonoBehaviour
     protected TextMeshProUGUI rewardValue;
     [SerializeField] 
     protected GraphicRaycaster raycaster;
-    
-    [Header("Animation:")]
-    [SerializeField]
-    protected Animator _rewardsAnimator;
-    
-    [Header("Timer:")]
-    [SerializeField] 
-    protected float _totalTime = 15f;
     [SerializeField] 
     protected TMP_Text _currentTimeText;
     [SerializeField] 
     protected Slider _progressSlider;
-    protected float _timeLeft;
-    protected bool _countingDown;
     
-    [Header("Reward settings:")]
-    [SerializeField] 
-    private int _correctReward = 4000;    
-    [SerializeField] 
-    private int _incorrectReward = 1000; 
-    
-    [FormerlySerializedAs("_flagSpritesToIds")]
-    [Header("Button settings:")]
-    [SerializeField] 
-    private QuizVisualsData[] _quizVisuals;
-    
-    [Header("Data Reading")]
-    [SerializeField] 
-    protected TextAsset _quizData;
-    [SerializeField] 
-    protected QuizReader quizReader;
-    protected QuestionData[] _questions;
-    protected int _currentQuestionIndex = 0;
-    protected QuestionData _currentQuestion;
-    protected Answer _currentAnswer;
-
-    private const string incorrectAnswerMessage = "You'll get it right next time!";
-    private const string correctAnswerMessage = "Well Done!";
+    [Header("Animation:")]
+    [SerializeField]
+    protected Animator _rewardsAnimator;
     private const string animatorOpenState = "Open";
     private const string animatorCloseState = "Close";
     
+    [Space(10)] 
+    private float _timeLeft;
+    private bool _countingDown;
+    
+    protected QuestionData[] Questions;
+    protected int CurrentQuestionIndex = 0;
+    protected QuestionData CurrentQuestion;
+    private const string incorrectAnswerMessage = "You'll get it right next time!";
+    private const string correctAnswerMessage = "Well Done!";
+
+    
     private void Awake()
     {
-        _timeLeft = _totalTime;
+        _timeLeft = maximumQuizAnswerTime;
         _currentTimeText.text = _timeLeft.ToString();
         SetQuestionData();
     }
@@ -76,7 +72,7 @@ public abstract class QuizController : MonoBehaviour
 
     protected virtual void SetQuestionData()
     {
-        _questions = quizReader.ParseQuizData(_quizData);
+        Questions = quizReader.ParseQuizData(_quizData);
     }
     
     private void Update()                                                    
@@ -85,7 +81,7 @@ public abstract class QuizController : MonoBehaviour
         {                                                                            
             _timeLeft -= Time.deltaTime;                                     
             _currentTimeText.text = _timeLeft.ToString("F0") + "s";          
-            _progressSlider.value = _timeLeft / _totalTime;                  
+            _progressSlider.value = _timeLeft / maximumQuizAnswerTime;                  
         }
         else            
         {
@@ -98,7 +94,7 @@ public abstract class QuizController : MonoBehaviour
     protected void SetAnswerVisuals(bool isCorrect)
     {
         answerMessage.text = isCorrect ? correctAnswerMessage : incorrectAnswerMessage;
-        rewardValue.text = isCorrect ? _correctReward.ToString() : _incorrectReward.ToString();
+        rewardValue.text = isCorrect ? gameSettings.correctTravelPointReward.ToString() : gameSettings.incorrectTravelPointReward.ToString();
         rewardUI.SetActive(true);
         AnimateRewardText();
     }
@@ -146,7 +142,7 @@ public abstract class QuizController : MonoBehaviour
 
     protected void SetTravelPoints(bool isCorrect)
     {
-        PlayerDataManager.Instance.AddTravelPoints(isCorrect ? _correctReward : _incorrectReward);
+        PlayerDataManager.Instance.AddTravelPoints(isCorrect ? gameSettings.correctTravelPointReward : gameSettings.incorrectTravelPointReward);
     }
     
     protected Sprite GetSpriteByID(string imageID, bool customID = false)

@@ -4,7 +4,6 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using Lofelt.NiceVibrations;
@@ -17,21 +16,15 @@ public class BoardController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stepsCounterText;
     [SerializeField] private TextMeshProUGUI _travelPointsValueText;
 
-    [Header("Game settings")] [SerializeField]
-    private int travelPointRewardOnEmptyTile = 1000;
+    [Header("Game settings")]
+    [SerializeField] private GameSettings gameSettings;
 
     [SerializeField] private Player player;
-
-    [FormerlySerializedAs("jumpSpeed")] [SerializeField]
-    private float playerJumpSpeed = 0.3f;
 
     [SerializeField] private BoardFactory boardFactory;
 
     [SerializeField] private GraphicRaycaster raycaster;
-
-    [FormerlySerializedAs("maxSteps")] [SerializeField] [Range(1, 10)]
-    private int randomMaxSteps = 10;
-
+    
     [SerializeField] private HapticClip rattleClip;
 
     private BoardTile[] tiles;
@@ -52,7 +45,7 @@ public class BoardController : MonoBehaviour
 
     public void OnTravelButtonPressed()
     {
-        MoveSteps(Random.Range(1, randomMaxSteps + 1));
+        MoveSteps(Random.Range(1, gameSettings.randomMaxSteps + 1));
         HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
     }
 
@@ -90,7 +83,7 @@ public class BoardController : MonoBehaviour
             Vector3 targetPosition = tiles[nextTileIndex].transform.position;
             targetPosition.y = originalY;
 
-            player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: playerJumpSpeed)
+            player.transform.DOJump(targetPosition, jumpPower: 0.5f, numJumps: 1, duration: gameSettings.playerJumpSpeed)
                 .SetEase(Ease.OutQuad)
                 .OnKill(() =>
                 {
@@ -108,7 +101,7 @@ public class BoardController : MonoBehaviour
                     }
                 });
 
-            yield return new WaitForSeconds(playerJumpSpeed);
+            yield return new WaitForSeconds(gameSettings.playerJumpSpeed);
             currentTileIndex = nextTileIndex;
             PlayerDataManager.Instance.SetCurrentPosition(currentTileIndex);
         }
@@ -142,8 +135,8 @@ public class BoardController : MonoBehaviour
         {
             case TileType.Default:
                 player.PlayCoinEffect();
-                player.PlayTravelPointsEffect(travelPointRewardOnEmptyTile);
-                PlayerDataManager.Instance.AddTravelPoints(travelPointRewardOnEmptyTile);
+                player.PlayTravelPointsEffect(gameSettings.travelPointRewardOnEmptyTile);
+                PlayerDataManager.Instance.AddTravelPoints(gameSettings.travelPointRewardOnEmptyTile);
                 int currentTravelPoints = PlayerDataManager.Instance.GetTravelPoints();
                 AnimateTravelPointsChange(_previousTravelPoints, currentTravelPoints);
                 break;

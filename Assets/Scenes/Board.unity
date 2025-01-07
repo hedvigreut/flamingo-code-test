@@ -3428,12 +3428,10 @@ MonoBehaviour:
   _travelButton: {fileID: 871975786}
   stepsCounterText: {fileID: 460721195}
   _travelPointsValueText: {fileID: 158064481}
-  travelPointRewardOnEmptyTile: 1000
+  gameSettings: {fileID: 11400000, guid: 135895258e4b8452ab78ceb895370a7a, type: 2}
   player: {fileID: 2018558642}
-  playerJumpSpeed: 0.25
   boardFactory: {fileID: 1697195308}
   raycaster: {fileID: 2099251577}
-  randomMaxSteps: 10
   rattleClip: {fileID: -8404250095460277587, guid: c2cf96fe302d24d87aec931e86940617,
     type: 3}
 --- !u!4 &1268212494
@@ -5540,11 +5538,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 330585546}
   - {fileID: 410087041}
-  - {fileID: 832575519}
-  - {fileID: 5152446221303807193}
-  - {fileID: 2018558639}
-  - {fileID: 2099251580}
-  - {fileID: 2006086959}
   - {fileID: 1268212494}
   - {fileID: 1697195307}
+  - {fileID: 2099251580}
+  - {fileID: 5152446221303807193}
+  - {fileID: 2018558639}
   - {fileID: 1246194238}
+  - {fileID: 2006086959}
+  - {fileID: 832575519}

@@ -1,7 +1,6 @@
 using System.Collections;
 using DG.Tweening;
 using Lofelt.NiceVibrations;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,15 +17,14 @@ public class PictureQuizController : QuizController
     protected override void SetQuestionData()
     {
         base.SetQuestionData();
-        _currentQuestionIndex = PlayerDataManager.Instance.GetPictureQuestionIndex();
-        if (_currentQuestionIndex >= _questions.Length || _questions.Length == 0)
+        CurrentQuestionIndex = PlayerDataManager.Instance.GetPictureQuestionIndex();
+        if (CurrentQuestionIndex >= Questions.Length || Questions.Length == 0)
         {
-            _currentQuestionIndex = 0;
+            CurrentQuestionIndex = 0;
             PlayerDataManager.Instance.ResetPictureQuestionIndex();
         }
-        _currentQuestion = _questions[_currentQuestionIndex];
-        _currentAnswer = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex];
-        if (_currentQuestion != null)
+        CurrentQuestion = Questions[CurrentQuestionIndex];
+        if (CurrentQuestion != null)
         {
             SetQuestionVisuals();
         }
@@ -42,15 +40,15 @@ public class PictureQuizController : QuizController
     /// </summary>
     private void SetQuestionVisuals()
     {
-        questionText.text = _currentQuestion.Question;
-        string imageID = _currentQuestion.CustomImageID;
+        questionText.text = CurrentQuestion.Question;
+        string imageID = CurrentQuestion.CustomImageID;
         Sprite quizPicture = GetSpriteByID(imageID,  true);
         quizImage.sprite = quizPicture;
         correctAnswerImage.sprite = quizPicture;
-        correctAnswerText.text = _currentQuestion.Answers[_currentQuestion.CorrectAnswerIndex].Text;
-        for (int i = 0; i < _currentQuestion.Answers.Length && i < optionButtons.Length; i++)
+        correctAnswerText.text = CurrentQuestion.Answers[CurrentQuestion.CorrectAnswerIndex].Text;
+        for (int i = 0; i < CurrentQuestion.Answers.Length && i < optionButtons.Length; i++)
         {
-            optionButtons[i].GetText().text = _currentQuestion.Answers[i].Text;
+            optionButtons[i].GetText().text = CurrentQuestion.Answers[i].Text;
         }
     }
     
@@ -62,12 +60,12 @@ public class PictureQuizController : QuizController
     public void OnOptionButtonPressed(int index)
     {
         TextButton textButton = optionButtons[index];
-        bool isCorrect = index == _currentQuestion.CorrectAnswerIndex;
+        bool isCorrect = index == CurrentQuestion.CorrectAnswerIndex;
         textButton.ChangeColor(isCorrect);
         SetTravelPoints(isCorrect: isCorrect);
-        _currentQuestionIndex++;
+        CurrentQuestionIndex++;
         HapticPatterns.PlayPreset(isCorrect ? HapticPatterns.PresetType.Success : HapticPatterns.PresetType.Failure);
-        PlayerDataManager.Instance.SetPictureQuestionIndex(_currentQuestionIndex);
+        PlayerDataManager.Instance.SetPictureQuestionIndex(CurrentQuestionIndex);
         StartCoroutine(WaitForButtonAnimation(textButton, isCorrect));
         }
     
